@@ -2,7 +2,9 @@ import React from 'react';
 import loadable from '@loadable/component';
 import getPageDataLoadingAPI from './containers/pageDataLoadingAPI';
 import { NotFoundPage } from './containers';
-
+import {
+  ManageListingsPage,
+} from './containers';
 // routeConfiguration needs to initialize containers first
 // Otherwise, components will import form container eventually and
 // at that point css bundling / imports will happen in wrong order.
@@ -228,6 +230,14 @@ const routeConfiguration = () => {
       extraProps: { transactionRole: 'provider' },
       loadData: params =>
         pageDataLoadingAPI.TransactionPage.loadData({ ...params, transactionRole: 'provider' }),
+    },
+    {
+      path: '/listings',
+      name: 'ManageListingsPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <ManageListingsPage {...props} />,
+      loadData: pageDataLoadingAPI.ManageListingsPage.loadData,
     },
     {
       path: '/account',

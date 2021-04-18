@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bool, func, object, shape, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
@@ -33,7 +33,6 @@ export class ProfileSettingsPageComponent extends Component {
   render() {
     const {
       currentUser,
-      currentUserListing,
       image,
       onImageUpload,
       onUpdateProfile,
@@ -94,7 +93,7 @@ export class ProfileSettingsPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="ProfileSettingsPage" />
-            <UserNav selectedPageName="ProfileSettingsPage" listing={currentUserListing} />
+            <UserNav selectedPageName="ProfileSettingsPage" />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             <div className={css.content}>
@@ -126,15 +125,15 @@ export class ProfileSettingsPageComponent extends Component {
 
 ProfileSettingsPageComponent.defaultProps = {
   currentUser: null,
-  currentUserListing: null,
   uploadImageError: null,
   updateProfileError: null,
   image: null,
 };
 
+const { bool, func, object, shape, string } = PropTypes;
+
 ProfileSettingsPageComponent.propTypes = {
   currentUser: propTypes.currentUser,
-  currentUserListing: propTypes.ownListing,
   image: shape({
     id: string,
     imageId: propTypes.uuid,
@@ -154,7 +153,7 @@ ProfileSettingsPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { currentUser, currentUserListing } = state.user;
+  const { currentUser } = state.user;
   const {
     image,
     uploadImageError,
@@ -164,7 +163,6 @@ const mapStateToProps = state => {
   } = state.ProfileSettingsPage;
   return {
     currentUser,
-    currentUserListing,
     image,
     scrollingDisabled: isScrollingDisabled(state),
     updateInProgress,

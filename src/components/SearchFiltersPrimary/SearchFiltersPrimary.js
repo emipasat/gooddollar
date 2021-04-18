@@ -58,7 +58,7 @@ const SearchFiltersPrimaryComponent = props => {
 
       <div className={css.filters}>
         {children}
-        {toggleSecondaryFiltersOpenButton}
+        {/* {toggleSecondaryFiltersOpenButton}        //button that opens the list of secondary filters */}
       </div>
 
       {hasNoResult ? (
