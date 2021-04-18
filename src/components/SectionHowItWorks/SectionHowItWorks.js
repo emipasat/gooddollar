@@ -3,7 +3,7 @@ import { bool, string } from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
-import { OwnListingLink } from '../../components';
+import OwnListingLink from '../../components/OwnListingLink/OwnListingLink';
 
 import css from './SectionHowItWorks.module.css';
 

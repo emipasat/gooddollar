@@ -137,7 +137,6 @@ class TopbarComponent extends Component {
       authInProgress,
       currentUser,
       currentUserHasListings,
-      currentUserListing,
       currentUserListingFetched,
       currentUserHasOrders,
       currentPage,
@@ -167,7 +166,6 @@ class TopbarComponent extends Component {
       <TopbarMobileMenu
         isAuthenticated={isAuthenticated}
         currentUserHasListings={currentUserHasListings}
-        currentUserListing={currentUserListing}
         currentUserListingFetched={currentUserListingFetched}
         currentUser={currentUser}
         onLogout={this.handleLogout}
@@ -228,7 +226,6 @@ class TopbarComponent extends Component {
           <TopbarDesktop
             className={desktopClassName}
             currentUserHasListings={currentUserHasListings}
-            currentUserListing={currentUserListing}
             currentUserListingFetched={currentUserListingFetched}
             currentUser={currentUser}
             currentPage={currentPage}

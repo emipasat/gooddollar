@@ -36,7 +36,7 @@ const OwnListingLink = props => {
       params={{
         id,
         slug,
-        type: getListingType(isDraft),
+        // type: getListingType(isDraft),
         tab: 'photos',
       }}
     >

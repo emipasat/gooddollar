@@ -18,6 +18,7 @@ import {
 
 import FilterComponent from './FilterComponent';
 import { validFilterParams } from './SearchPage.helpers';
+import { filters } from '../../marketplace-custom-config'
 
 import css from './SearchPage.module.css';
 
@@ -235,6 +236,9 @@ class MainPanel extends Component {
     };
 
     const classes = classNames(rootClassName || css.searchResultContainer, className);
+    const onlyNeededConfigs = [filters[0],filters[1],filters[2],filters[3]];
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+    console.log(onlyNeededConfigs)
 
     return (
       <div className={classes}>
@@ -278,7 +282,7 @@ class MainPanel extends Component {
           resetAll={this.resetAll}
           selectedFiltersCount={selectedFiltersCount}
         >
-          {filterConfig.map(config => {
+          {onlyNeededConfigs.map(config => {
             return (
               <FilterComponent
                 key={`SearchFiltersMobile.${config.id}`}

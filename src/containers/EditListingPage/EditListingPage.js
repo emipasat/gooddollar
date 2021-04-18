@@ -21,7 +21,7 @@ import {
   stripeAccountClearError,
   getStripeConnectAccountLink,
 } from '../../ducks/stripeConnectAccount.duck';
-import { EditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../components';
+import { EditListingWizard, NamedRedirect, Page } from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import {
@@ -90,8 +90,7 @@ export const EditListingPageComponent = props => {
   const isNewListingFlow = isNewURI || isDraftURI;
 
   const listingId = page.submittedListingId || (id ? new UUID(id) : null);
-  const listing = getOwnListing(listingId);
-  const currentListing = ensureOwnListing(listing);
+  const currentListing = ensureOwnListing(getOwnListing(listingId));
   const { state: currentListingState } = currentListing.attributes;
 
   const isPastDraft = currentListingState && currentListingState !== LISTING_STATE_DRAFT;
@@ -194,10 +193,6 @@ export const EditListingPageComponent = props => {
           desktopClassName={css.desktopTopbar}
           mobileClassName={css.mobileTopbar}
         />
-        <UserNav
-          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
-          listing={listing}
-        />
         <EditListingWizard
           id="EditListingWizard"
           className={css.wizard}
@@ -238,7 +233,6 @@ export const EditListingPageComponent = props => {
           }
           stripeAccountLinkError={getAccountLinkError}
         />
-        <Footer />
       </Page>
     );
   } else {
@@ -248,20 +242,7 @@ export const EditListingPageComponent = props => {
       id: 'EditListingPage.loadingListingData',
     };
     return (
-      <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled}>
-        <TopbarContainer
-          className={css.topbar}
-          mobileRootClassName={css.mobileTopbar}
-          desktopClassName={css.desktopTopbar}
-          mobileClassName={css.mobileTopbar}
-        />
-        <UserNav
-          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
-          listing={listing}
-        />
-        <div className={css.placeholderWhileLoading} />
-        <Footer />
-      </Page>
+      <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled} />
     );
   }
 };
