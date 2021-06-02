@@ -44,6 +44,8 @@ const SectionLocations = props => {
 
   const classes = classNames(rootClassName || css.root, className);
 
+  return null;
+
   return (
     <div className={classes}>
       <div className={css.title}>
