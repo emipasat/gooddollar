@@ -9,7 +9,7 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
 import config from '../../config';
-import { Form, PrimaryButton, FieldTextInput, StripePaymentAddress } from '../../components';
+import { Form, PrimaryButton, FieldTextInput } from '../../components';
 import css from './PaymentMethodsForm.module.css';
 
 /**
@@ -209,15 +209,8 @@ class PaymentMethodsForm extends Component {
       id: 'PaymentMethodsForm.infoText',
     });
 
-    // Stripe recommends asking billing address.
-    // In PaymentMethodsForm, we send name and email as billing details, but address only if it exists.
-    const billingAddress = (
-      <StripePaymentAddress intl={intl} form={form} fieldId={formId} card={this.card} />
-    );
-
-    const hasStripeKey = config.stripe.publishableKey;
-
-    return hasStripeKey ? (
+    
+    return  (
       <Form className={classes} onSubmit={handleSubmit}>
         <label className={css.paymentLabel} htmlFor={`${formId}-card`}>
           <FormattedMessage id="PaymentMethodsForm.paymentCardDetails" />
@@ -247,7 +240,7 @@ class PaymentMethodsForm extends Component {
             placeholder={billingDetailsNamePlaceholder}
           />
 
-          {billingAddress}
+          
         </div>
 
         <div className={css.submitContainer}>
@@ -266,10 +259,6 @@ class PaymentMethodsForm extends Component {
           </PrimaryButton>
         </div>
       </Form>
-    ) : (
-      <div className={css.missingStripeKey}>
-        <FormattedMessage id="PaymentMethodsForm.missingStripeKey" />
-      </div>
     );
   }
 
