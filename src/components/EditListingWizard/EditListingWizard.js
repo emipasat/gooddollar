@@ -219,14 +219,12 @@ class EditListingWizard extends Component {
     const { onPublishListingDraft, currentUser, stripeAccount } = this.props;
 
     const stripeConnected =
-      currentUser && currentUser.stripeAccount && !!currentUser.stripeAccount.id;
+      currentUser && currentUser.attributes && !!currentUser.attributes.profile.protectedData.goodDollarAccount;
 
-    const stripeAccountData = stripeConnected ? getStripeAccountData(stripeAccount) : null;
+    const stripeAccountData = stripeConnected ? 
+      currentUser.attributes.profile.protectedData.goodDollarAccount : null;
 
-    const requirementsMissing =
-      stripeAccount &&
-      (hasRequirements(stripeAccountData, 'past_due') ||
-        hasRequirements(stripeAccountData, 'currently_due'));
+    const requirementsMissing = !stripeAccountData;
 
     if (stripeConnected && !requirementsMissing) {
       onPublishListingDraft(id);
@@ -278,6 +276,14 @@ class EditListingWizard extends Component {
       stripeAccountError,
       stripeAccountLinkError,
       currentUser,
+
+      // missing from account form
+      saveGoodDollarAccountError,
+      onChange,
+      saveStripePayoutInProgress,
+      contactDetailsChanged,
+      onSubmitStripePayout,
+
       ...rest
     } = this.props;
 
@@ -329,6 +335,9 @@ class EditListingWizard extends Component {
     const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!ensuredCurrentUser.id;
     const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
+
+    const currentGoodDollarAccount = currentUserLoaded 
+        && ensuredCurrentUser.attributes.profile.protectedData.goodDollarAccount;
 
     const rootURL = config.canonicalRootURL;
     const routes = routeConfiguration();
@@ -429,24 +438,19 @@ class EditListingWizard extends Component {
                 <p className={css.modalMessage}>
                   <FormattedMessage id="EditListingWizard.payoutModalInfo" />
                 </p>
-                <StripeConnectAccountForm
-                  disabled={formDisabled}
-                  inProgress={payoutDetailsSaveInProgress}
-                  ready={payoutDetailsSaved}
-                  currentUser={ensuredCurrentUser}
-                  stripeBankAccountLastDigits={getBankAccountLast4Digits(stripeAccountData)}
-                  savedCountry={savedCountry}
-                  submitButtonText={intl.formatMessage({
-                    id: 'StripePayoutPage.submitButtonText',
-                  })}
-                  stripeAccountError={stripeAccountError}
-                  stripeAccountFetched={stripeAccountFetched}
-                  stripeAccountLinkError={stripeAccountLinkError}
-                  onChange={onPayoutDetailsFormChange}
-                  onSubmit={rest.onPayoutDetailsSubmit}
-                  onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink}
-                  stripeConnected={stripeConnected}
-                >
+                <GoodDollarAccountForm
+                    className={css.form}
+                    initialValues={{ goodDollarAccount: currentGoodDollarAccount }}
+                    saveGoodDollarAccountError={saveGoodDollarAccountError}
+                    currentUser={currentUser}
+                    
+                    onSubmit={values => onSubmitStripePayout({ ...values, currentGoodDollarAccount })}
+                    onChange={onChange}
+
+                    inProgress={saveStripePayoutInProgress}
+                    ready={contactDetailsChanged}
+                    
+                  >
                   {stripeConnected && !returnedAbnormallyFromStripe && showVerificationNeeded ? (
                     <StripeConnectAccountStatusBox
                       type="verificationNeeded"
@@ -465,7 +469,7 @@ class EditListingWizard extends Component {
                       )}
                     />
                   ) : null}
-                </StripeConnectAccountForm>
+                </GoodDollarAccountForm>
               </>
             )}
           </div>
@@ -536,6 +540,8 @@ EditListingWizard.propTypes = {
   onPayoutDetailsFormChange: func.isRequired,
   onGetStripeConnectAccountLink: func.isRequired,
   onManageDisableScrolling: func.isRequired,
+
+  onSubmitStripePayout: func.isRequired,
 
   // from withViewport
   viewport: shape({

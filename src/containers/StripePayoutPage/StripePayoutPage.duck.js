@@ -106,7 +106,7 @@ const requestSaveGoodDollarAccount = params => (dispatch, getState, sdk) => {
 /**
  * Save phone number and update the current user.
  */
-const saveGoodDollarAccount = params => (dispatch, getState, sdk) => {
+export const saveGoodDollarAccount = params => (dispatch, getState, sdk) => {
   return (
     dispatch(requestSaveGoodDollarAccount(params))
       .then(user => {
