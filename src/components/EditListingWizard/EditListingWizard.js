@@ -16,7 +16,7 @@ import {
 import { ensureCurrentUser, ensureListing } from '../../util/data';
 
 import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '../../components';
-import { StripeConnectAccountForm } from '../../forms';
+import { GoodDollarAccountForm } from '../../forms';
 
 import EditListingWizardTab, {
   AVAILABILITY,
