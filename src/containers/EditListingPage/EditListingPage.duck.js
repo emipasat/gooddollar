@@ -12,6 +12,8 @@ import {
 import { fetchCurrentUser } from '../../ducks/user.duck';
 import * as log from '../../util/log';
 
+import { saveGoodDollarAccount, saveStripePayout } from '../StripePayoutPage/StripePayoutPage.duck';
+
 const { UUID } = sdkTypes;
 
 const requestAction = actionType => params => ({ type: actionType, payload: { params } });
@@ -65,6 +67,11 @@ export const SAVE_PAYOUT_DETAILS_REQUEST = 'app/EditListingPage/SAVE_PAYOUT_DETA
 export const SAVE_PAYOUT_DETAILS_SUCCESS = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_SUCCESS';
 export const SAVE_PAYOUT_DETAILS_ERROR = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_ERROR';
 
+export const SAVE_GOOD_DOLLAR_ACCOUNT_REQUEST = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_REQUEST';
+export const SAVE_GOOD_DOLLAR_ACCOUNT_SUCCESS = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_SUCCESS';
+export const SAVE_GOOD_DOLLAR_ACCOUNT_ERROR = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_ERROR';
+
+
 // ================ Reducer ================ //
 
 const initialState = {
@@ -93,6 +100,7 @@ const initialState = {
   updateInProgress: false,
   payoutDetailsSaveInProgress: false,
   payoutDetailsSaved: false,
+  saveGoodDollarAccountError: null
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -292,6 +300,15 @@ export default function reducer(state = initialState, action = {}) {
     case SAVE_PAYOUT_DETAILS_SUCCESS:
       return { ...state, payoutDetailsSaveInProgress: false, payoutDetailsSaved: true };
 
+
+    case SAVE_GOOD_DOLLAR_ACCOUNT_REQUEST:
+      return { ...state, payoutDetailsSaveInProgress: true };
+    case SAVE_GOOD_DOLLAR_ACCOUNT_ERROR:
+      return { ...state, payoutDetailsSaveInProgress: false };
+    case SAVE_GOOD_DOLLAR_ACCOUNT_SUCCESS:
+      return { ...state, payoutDetailsSaveInProgress: false, payoutDetailsSaved: true };
+
+
     default:
       return state;
   }
@@ -367,6 +384,10 @@ export const deleteAvailabilityExceptionError = errorAction(DELETE_EXCEPTION_ERR
 export const savePayoutDetailsRequest = requestAction(SAVE_PAYOUT_DETAILS_REQUEST);
 export const savePayoutDetailsSuccess = successAction(SAVE_PAYOUT_DETAILS_SUCCESS);
 export const savePayoutDetailsError = errorAction(SAVE_PAYOUT_DETAILS_ERROR);
+
+export const saveGoodDollarAccountRequest = requestAction(SAVE_GOOD_DOLLAR_ACCOUNT_REQUEST);
+export const saveGoodDollarAccountSuccess = successAction(SAVE_GOOD_DOLLAR_ACCOUNT_SUCCESS);
+export const saveGoodDollarAccountError = errorAction(SAVE_GOOD_DOLLAR_ACCOUNT_ERROR);
 
 // ================ Thunk ================ //
 
@@ -524,6 +545,17 @@ export const savePayoutDetails = (values, isUpdateCall) => (dispatch, getState, 
   dispatch(savePayoutDetailsRequest());
 
   return dispatch(upsertThunk(values, { expand: true }))
+    .then(response => {
+      dispatch(savePayoutDetailsSuccess());
+      return response;
+    })
+    .catch(() => dispatch(savePayoutDetailsError()));
+};
+
+export const saveGoodDollarAccountLocal = (values) => (dispatch, getState, sdk) => {
+  dispatch(savePayoutDetailsRequest());
+
+  return dispatch(saveStripePayout(values, { expand: true }))
     .then(response => {
       dispatch(savePayoutDetailsSuccess());
       return response;

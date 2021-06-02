@@ -35,6 +35,7 @@ import {
   removeListingImage,
   clearUpdatedTab,
   savePayoutDetails,
+  saveGoodDollarAccountLocal
 } from './EditListingPage.duck';
 
 import css from './EditListingPage.module.css';
@@ -82,6 +83,8 @@ export const EditListingPageComponent = props => {
     stripeAccountFetched,
     stripeAccount,
     updateStripeAccountError,
+
+    onSubmitStripePayout
   } = props;
 
   const { id, type, returnURLType } = params;
@@ -232,6 +235,8 @@ export const EditListingPageComponent = props => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
+
+          onSubmitStripePayout={onSubmitStripePayout}
         />
       </Page>
     );
@@ -359,6 +364,8 @@ const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onPayoutDetailsFormChange: () => dispatch(stripeAccountClearError()),
+  onPayoutDetailsSubmit: values => dispatch(createStripeAccount(values)),
+  onSubmitStripePayout: values => dispatch(saveGoodDollarAccountLocal(values)),
   onPayoutDetailsFormSubmit: (values, isUpdateCall) =>
     dispatch(savePayoutDetails(values, isUpdateCall)),
   onGetStripeConnectAccountLink: params => dispatch(getStripeConnectAccountLink(params)),
