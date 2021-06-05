@@ -1,6 +1,7 @@
 // See: https://en.wikipedia.org/wiki/ISO_4217
 // See: https://stripe.com/docs/currencies
 export const subUnitDivisors = {
+  G$: 100,
   AUD: 100,
   CAD: 100,
   CHF: 100,
