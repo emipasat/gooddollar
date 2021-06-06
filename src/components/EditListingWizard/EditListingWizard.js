@@ -219,10 +219,10 @@ class EditListingWizard extends Component {
     const { onPublishListingDraft, currentUser, stripeAccount } = this.props;
 
     const stripeConnected =
-      currentUser && currentUser.attributes && !!currentUser.attributes.profile.protectedData.goodDollarAccount;
+      currentUser && currentUser.attributes && !!currentUser.attributes.profile.publicData.goodDollarAccount;
 
     const stripeAccountData = stripeConnected ? 
-      currentUser.attributes.profile.protectedData.goodDollarAccount : null;
+      currentUser.attributes.profile.publicData.goodDollarAccount : null;
 
     const requirementsMissing = !stripeAccountData;
 
@@ -337,7 +337,7 @@ class EditListingWizard extends Component {
     const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
 
     const currentGoodDollarAccount = currentUserLoaded 
-        && ensuredCurrentUser.attributes.profile.protectedData.goodDollarAccount;
+        && ensuredCurrentUser.attributes.profile.publicData.goodDollarAccount;
 
     const rootURL = config.canonicalRootURL;
     const routes = routeConfiguration();

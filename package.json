@@ -16,6 +16,7 @@
     "autosize": "^4.0.0",
     "basic-auth": "^2.0.1",
     "body-parser": "^1.18.3",
+    "bootstrap": "^5.0.1",
     "classnames": "^2.2.6",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
@@ -48,6 +49,7 @@
     "query-string": "^6.13.1",
     "raf": "^3.4.0",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.6.1",
     "react-dates": "^21.3.1",
     "react-dom": "^16.13.1",
     "react-final-form": "^6.5.1",
@@ -125,11 +127,9 @@
       "last 1 safari version"
     ]
   },
-
-   "engines": {
+  "engines": {
     "node": "^12.19.0 || >= 14.15.0"
   },
-
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5",

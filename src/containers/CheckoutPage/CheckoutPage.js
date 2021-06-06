@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import routeConfiguration from '../../routeConfiguration';
 import { pathByRouteName, findRouteByRouteName } from '../../util/routes';
 import { propTypes, LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
+import LinkWrapper from '../../components/LinkWrapper/LinkWrapper';
 import {
   ensureListing,
   ensureUser,
@@ -225,6 +226,11 @@ export class CheckoutPageComponent extends Component {
       params,
       currentUser,
     } = this.props;
+
+    const external_link="https://wallet.gooddollar.org?code="; //
+    const internal_link="http://localhost:3000/about";
+
+
 
     // Since the listing data is already given from the ListingPage
     // and stored to handle refreshes, it might not have the possible
@@ -493,6 +499,25 @@ export class CheckoutPageComponent extends Component {
       />
     );
 
+    let finalUrl = '';
+
+    const account = 'm';
+    const amount = 'a';
+    const product = 'r';
+    const category = 'cat';
+    const obj = {
+        [account]: currentAuthor.attributes.profile.publicData.goodDollarAccount,
+        [amount]: listing.attributes.price.amount,
+        [product]: listing.attributes.title,
+        [category]: 'Other'
+    };
+    console.log(obj);
+
+    let objJsonStr = JSON.stringify(obj);
+    let objJsonB64 = Buffer.from(objJsonStr).toString("base64");  
+
+    finalUrl = external_link + objJsonB64;
+
     return (
       <Page {...pageProps}>
         {topbar}
@@ -524,6 +549,9 @@ export class CheckoutPageComponent extends Component {
               {listingNotFoundErrorMessage}
               {speculateErrorMessage}
               {bookingForm}
+
+              <LinkWrapper link={finalUrl}/>
+              <a href={finalUrl} target="_blank">Open payment link</a>
             </section>
           </div>
 
