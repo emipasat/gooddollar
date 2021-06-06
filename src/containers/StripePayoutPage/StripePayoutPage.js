@@ -43,8 +43,8 @@ export const StripePayoutPageComponent = props => {
 
   const user = ensureCurrentUser(currentUser);
   //const currentEmail = user.attributes.email || '';
-  const protectedData = user.attributes.profile.protectedData || {};
-  const currentGoodDollarAccount = protectedData.goodDollarAccount || '';
+  const publicData = user.attributes.profile.publicData || {};
+  const currentGoodDollarAccount = publicData.goodDollarAccount || '';
   const contactInfoForm =  user.id ? (
     <GoodDollarAccountForm
       className={css.form}

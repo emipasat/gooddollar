@@ -64,8 +64,8 @@ class GoodDollarAccountFormComponent extends Component {
           
 
           // goodDollarAccount
-          const protectedData = profile.protectedData || {};
-          const currentGoodDollarAccount = protectedData.goodDollarAccount;
+          const publicData = profile.publicData || {};
+          const currentGoodDollarAccount = publicData.goodDollarAccount;
 
           // has the goodDollarAccount number changed
           const goodDollarAccountChanged = currentGoodDollarAccount !== goodDollarAccount;

@@ -33,6 +33,7 @@ import routeConfiguration from './routeConfiguration';
 import * as log from './util/log';
 import { LoggingAnalyticsHandler, GoogleAnalyticsHandler } from './analytics/handlers';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/marketplaceDefaults.css';
 
 const render = (store, shouldHydrate) => {
