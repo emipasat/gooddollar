@@ -258,7 +258,7 @@ export const formatMoney = (intl, value) => {
     maximumFractionDigits: 2,
   };
 
-  return intl.formatNumber(valueAsNumber, numberFormatOptions);
+  return 'G'+intl.formatNumber(valueAsNumber, numberFormatOptions);
 };
 
 /**

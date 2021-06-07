@@ -24,7 +24,8 @@ const SectionHeading = props => {
       <div className={css.heading}>
         <h1 className={css.title}>{richTitle}</h1>
         <div className={css.author}>
-          {showCertificate ? <span>{certificate.label}</span> : null}
+          {category}
+          <FormattedMessage id="ListingPage.soldBy" values={{ name: hostLink }} />
           {showContactUser ? (
             <span className={css.contactWrapper}>
               {showCertificate ? <span className={css.separator}>•</span> : null}
