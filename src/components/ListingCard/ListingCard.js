@@ -113,10 +113,8 @@ export const ListingCardComponent = props => {
               longWordClass: css.longWord,
             })}
           </div>
-          <div className={css.certificateInfo}>
-            {certificate && !certificate.hideFromListingInfo ? (
-              <span>{certificate.label}</span>
-            ) : null}
+          <div className={css.authorInfo}>
+            <FormattedMessage id="ListingCard.soldBy" values={{ authorName }} />
           </div>
         </div>
       </div>

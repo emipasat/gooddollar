@@ -481,7 +481,10 @@ export class CheckoutPageComponent extends Component {
                     placeholder={messagePlaceholder}
                     className={css.message}
                   />
+
+                  <br/>
                 </div>
+                
               ) : null}
               <div className={css.submitContainer}>
                 <PrimaryButton
@@ -505,11 +508,13 @@ export class CheckoutPageComponent extends Component {
     const amount = 'a';
     const product = 'r';
     const category = 'cat';
+    const returnUrl = 'returnUrl';
     const obj = {
         [account]: currentAuthor.attributes.profile.publicData.goodDollarAccount,
         [amount]: listing.attributes.price.amount,
         [product]: listing.attributes.title,
-        [category]: 'Other'
+        [category]: 'Other',
+        [returnUrl]: 'http://localhost:3000/inbox/orders' //TODO TBD
     };
     console.log(obj);
 
@@ -550,7 +555,9 @@ export class CheckoutPageComponent extends Component {
               {speculateErrorMessage}
               {bookingForm}
 
+              <br/>
               <LinkWrapper link={finalUrl}/>
+              <br/>
               <a href={finalUrl} target="_blank">Open payment link</a>
             </section>
           </div>
