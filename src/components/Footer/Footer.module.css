@@ -1,7 +1,6 @@
 @import '../../styles/propertySets.css';
 
 .root {
-  position: relative;
   border-top-style: solid;
   border-top-width: 1px;
   border-top-color: var(--matterColorNegative);
@@ -122,6 +121,11 @@
   object-position: left center;
   width: 100%;
   height: 27px;
+}
+
+.logo > img{
+  height: auto;
+  width: 13pc;
 }
 
 .organizationInfo {
