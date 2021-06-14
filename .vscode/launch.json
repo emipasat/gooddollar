@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "command": "yarn run dev-server",
+            "name": "Run yarn dev-server",
+            "request": "launch",
+            "type": "node-terminal",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js",
+                "!**/node_modules/**"
+            ]
+        },
+        {
+            "command": "yarn run dev",
+            "name": "Run yarn dev",
+            "request": "launch",
+            "type": "node-terminal",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js",
+                "!**/node_modules/**"
+            ]
+        },
+        {
+            "type": "pwa-msedge",
+            "name": "http://localhost:3000",
+            "request": "launch",
+            "url": "http://localhost:3000"
+        },
+    ]
+}
