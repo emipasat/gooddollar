@@ -222,7 +222,7 @@ export const convertMoneyToNumber = value => {
 
     amount = new Decimal(value.amount.toString());
   } else {
-    amount = new Decimal(value.amount);
+    amount = value.amount ? new Decimal(value.amount) : new Decimal(0);
   }
 
   if (!isSafeNumber(amount)) {

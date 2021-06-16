@@ -284,10 +284,14 @@ class SearchMapWithMapbox extends Component {
   }
 
   componentWillUnmount() {
-    this.currentInfoCard.markerContainer.removeEventListener(
-      'dblclick',
-      this.handleDoubleClickOnInfoCard
-    );
+    if (this.currentInfoCard != null)
+    {
+      this.currentInfoCard.markerContainer.removeEventListener(
+        'dblclick',
+        this.handleDoubleClickOnInfoCard
+      );
+    }
+    
     document.removeEventListener('gesturestart', this.handleMobilePinchZoom, false);
     document.removeEventListener('gesturechange', this.handleMobilePinchZoom, false);
     document.removeEventListener('gestureend', this.handleMobilePinchZoom, false);

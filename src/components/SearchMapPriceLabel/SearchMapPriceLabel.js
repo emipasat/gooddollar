@@ -7,7 +7,11 @@ import { formatMoney } from '../../util/currency';
 import { ensureListing } from '../../util/data';
 import config from '../../config';
 
+import { types as sdkTypes } from '../../util/sdkLoader';
+
 import css from './SearchMapPriceLabel.module.css';
+
+const { Money } = sdkTypes;
 
 class SearchMapPriceLabel extends Component {
   shouldComponentUpdate(nextProps) {
@@ -27,10 +31,20 @@ class SearchMapPriceLabel extends Component {
     const currentListing = ensureListing(listing);
     const { price } = currentListing.attributes;
 
-    // Create formatted price if currency is known or alternatively show just the unknown currency.
-    const formattedPrice =
-      price && price.currency === config.currency ? formatMoney(intl, price) : price.currency;
+    let formattedPrice;
+    if (price === null)
+    {
+      formattedPrice =
+         formatMoney(intl, new Money(currentListing.attributes.publicData.priceInG, 'USD'));
+    }
+    else 
+    {
+      // Create formatted price if currency is known or alternatively show just the unknown currency.
+      formattedPrice =
+        price && price.currency === config.currency ? formatMoney(intl, price) : price.currency;
+    }
 
+    
     const classes = classNames(rootClassName || css.root, className);
     const priceLabelClasses = classNames(css.priceLabel, { [css.priceLabelActive]: isActive });
     const caretClasses = classNames(css.caret, { [css.caretActive]: isActive });

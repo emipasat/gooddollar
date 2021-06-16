@@ -11,8 +11,12 @@ import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
 import { BookingTimeForm } from '../../forms';
+import { types as sdkTypes } from '../../util/sdkLoader';
+
 
 import css from './BookingPanel.module.css';
+
+const { Money } = sdkTypes;
 
 // This defines when ModalInMobile shows content as Modal
 const MODAL_BREAKPOINT = 1023;
@@ -73,7 +77,7 @@ const BookingPanel = props => {
     fetchLineItemsError,
   } = props;
 
-  const price = listing.attributes.price;
+  const price = listing.attributes.price ? listing.attributes.price : new Money(listing.attributes.publicData.priceInG, 'USD');
   const timeZone =
     listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
   const hasListingState = !!listing.attributes.state;
