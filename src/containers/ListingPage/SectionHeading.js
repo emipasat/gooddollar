@@ -15,6 +15,8 @@ const SectionHeading = props => {
     certificateOptions,
     showContactUser,
     onContactUser,
+    category,
+    hostLink,
   } = props;
 
   const certificate = getCertificateInfo(certificateOptions, listingCertificate);

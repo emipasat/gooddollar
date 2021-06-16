@@ -10,14 +10,33 @@ import { ensureListing } from '../../util/data';
 import { ResponsiveImage } from '../../components';
 
 import css from './SearchMapInfoCard.module.css';
+import { types as sdkTypes } from '../../util/sdkLoader';
+const { Money } = sdkTypes;
 
 // ListingCard is the listing info without overlayview or carousel controls
 const ListingCard = props => {
   const { className, clickHandler, intl, isInCarousel, listing, urlToListing } = props;
 
   const { title, price } = listing.attributes;
-  const formattedPrice =
-    price && price.currency === config.currency ? formatMoney(intl, price) : price.currency;
+
+  // const formattedPrice =
+  //   price && price.currency === config.currency ? formatMoney(intl, price) : price.currency;
+  
+  
+  let formattedPrice;
+  if (price === null)
+  {
+    formattedPrice =
+        formatMoney(intl, new Money(listing.attributes.publicData.priceInG, 'USD'));
+  }
+  else 
+  {
+    // Create formatted price if currency is known or alternatively show just the unknown currency.
+    formattedPrice =
+      price && price.currency === config.currency ? formatMoney(intl, price) : price.currency;
+  }
+
+
   const firstImage = listing.images && listing.images.length > 0 ? listing.images[0] : null;
 
   // listing card anchor needs sometimes inherited border radius.
