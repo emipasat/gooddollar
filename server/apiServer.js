@@ -19,14 +19,14 @@ const app = express();
 // running in a different port than the main app.
 
 
-app.use(
-  cors({
-    origin: 'https://gooddev.netlify.app',//process.env.REACT_APP_CANONICAL_ROOT_URL, //TODO security
-    credentials: true, 
-  })
-);
+// app.use(
+//   cors({
+//     origin: 'https://gooddev.netlify.app',//process.env.REACT_APP_CANONICAL_ROOT_URL, //TODO security
+//     credentials: true, 
+//   })
+// );
 
-/*
+
 const allowedOrigins = ["http://localhost:3000", "https://gooddev.netlify.app", "https://wallet.gooddollar.org"];
 app.use(function(req, res, next) {
   let origin = req.headers.origin;
@@ -44,13 +44,9 @@ app.use(function(req, res, next) {
   // to the API (e.g. in case you use sessions)
   res.setHeader('Access-Control-Allow-Credentials', true);
 
-  // res.header(
-  //   "Access-Control-Allow-Headers",
-  //   "Origin, X-Requested-With, Content-Type, Accept"
-  // );
   next();
 });
-*/
+
 //app.options('*', cors()) // NU E BUN, nu'l mai pune
 
 app.use(cookieParser());
