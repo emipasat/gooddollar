@@ -658,10 +658,10 @@ export class CheckoutPageComponent extends Component {
               {speculateErrorMessage}
               {bookingForm}
 
-              <br/>
+              {/* <br/>
               <LinkWrapper link={finalUrl}/>
               <br/>
-              <a href={finalUrl} target="_blank">Open payment link</a>
+              <a href={finalUrl} target="_blank">Open payment link</a> */}
             </section>
           </div>
 
