@@ -180,7 +180,7 @@ export class CheckoutPageComponent extends Component {
   handleClick()
   {
     const w = window.open('', '_blank');
-    w.document.write("<html><head></head><body>Please wait while we redirect you</body></html>");
+    w.document.write("<html><head></head><body>Please wait while we load your wallet</body></html>");
     w.document.close();
     //const url = await getUrlAsync();
     //w.location = url1;  
@@ -189,6 +189,7 @@ export class CheckoutPageComponent extends Component {
       if (this && this.state.pageData.myUrl)
       {
         w.location = this.state.pageData.myUrl;
+        //this.state.pageData.window = w;
       }
     }, 1500);
     
