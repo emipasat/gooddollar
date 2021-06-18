@@ -16,7 +16,9 @@ const transactionLineItems = require('./api/transaction-line-items');
 const initiatePrivileged = require('./api/initiate-privileged');
 const transitionPrivileged = require('./api/transition-privileged');
 
-const { acceptPrivileged, acceptPrivilegedGet } = require('./api/accept-privileged');
+const acceptPrivileged = require('./api/accept-privileged');
+
+//const acceptPrivileged as acceptPrivilegedGet = require('./api/accept-privileged');
 
 const createUserWithIdp = require('./api/auth/createUserWithIdp');
 
@@ -58,8 +60,8 @@ router.post('/initiate-privileged', initiatePrivileged);
 router.post('/transition-privileged', transitionPrivileged);
 
 //TODO settle on one
-router.post('/accept-privileged', acceptPrivileged);
-router.get('/accept-privileged', acceptPrivilegedGet);
+//router.post('/accept-privileged', acceptPrivileged);
+router.get('/accept-privileged', acceptPrivileged);
 
 // Create user with identity provider (e.g. Facebook or Google)
 // This endpoint is called to create a new user after user has confirmed
