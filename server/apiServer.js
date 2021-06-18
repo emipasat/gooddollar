@@ -19,37 +19,37 @@ const app = express();
 // running in a different port than the main app.
 
 
-app.use(
-  cors({
-    origin: process.env.REACT_APP_CANONICAL_ROOT_URL, //TODO security
-    credentials: true, //??????? ce face??? oricum e doar pt local?
-  })
-);
+// app.use(
+//   cors({
+//     origin: process.env.REACT_APP_CANONICAL_ROOT_URL, //TODO security
+//     credentials: true, //??????? ce face??? oricum e doar pt local?
+//   })
+// );
 
 
-// const allowedOrigins = ["http://localhost:3000", "https://gooddev.netlify.app", "https://wallet.gooddollar.org"];
-// app.use(function(req, res, next) {
-//   let origin = req.headers.origin;
-//   if (allowedOrigins.includes(origin)) {
-//     res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
-//   }
+const allowedOrigins = ["http://localhost:3000", "https://gooddev.netlify.app", "https://wallet.gooddollar.org"];
+app.use(function(req, res, next) {
+  let origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
+  }
 
-//   // Request methods you wish to allow
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-//   // Request headers you wish to allow
-//   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-//   // Set to true if you need the website to include cookies in the requests sent
-//   // to the API (e.g. in case you use sessions)
-//   //res.setHeader('Access-Control-Allow-Credentials', true);
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
 
-//   // res.header(
-//   //   "Access-Control-Allow-Headers",
-//   //   "Origin, X-Requested-With, Content-Type, Accept"
-//   // );
-//   next();
-// });
+  // res.header(
+  //   "Access-Control-Allow-Headers",
+  //   "Origin, X-Requested-With, Content-Type, Accept"
+  // );
+  next();
+});
 
 app.options('*', cors())
 

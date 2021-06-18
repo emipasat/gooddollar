@@ -9,7 +9,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { deserialize } = require('./api-util/sdk');
-//const cors = require('cors');
+const cors = require('cors');
 
 const initiateLoginAs = require('./api/initiate-login-as');
 const loginAs = require('./api/login-as');
@@ -23,6 +23,15 @@ const createUserWithIdp = require('./api/auth/createUserWithIdp');
 
 const { authenticateFacebook, authenticateFacebookCallback } = require('./api/auth/facebook');
 const { authenticateGoogle, authenticateGoogleCallback } = require('./api/auth/google');
+
+const headers = (req, res, next) => {
+	const origin = (req.headers.origin == 'http://localhost:3000') ? 'http://localhost:3000' : 'https://gooddev.netlify.app'
+	res.setHeader('Access-Control-Allow-Origin', origin)
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+	res.setHeader('Access-Control-Allow-Credentials', true)
+	next()
+}
 
 const router = express.Router();
 
@@ -71,7 +80,7 @@ router.post('/transition-privileged', transitionPrivileged);
 
 //TODO settle on one
 //router.post('/accept-privileged', acceptPrivileged);
-router.post('/accept-privileged', acceptPrivileged);
+router.post('/accept-privileged', cors(), headers, acceptPrivileged);
 
 // Create user with identity provider (e.g. Facebook or Google)
 // This endpoint is called to create a new user after user has confirmed
