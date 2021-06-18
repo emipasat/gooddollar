@@ -17,36 +17,38 @@ const app = express();
 
 // NOTE: CORS is only needed in this dev API server because it's
 // running in a different port than the main app.
-// app.use(
-//   cors({
-//     origin: process.env.REACT_APP_CANONICAL_ROOT_URL, //TODO security
-//     credentials: true, ??????? ce face??? oricum e doar pt local?
-//   })
-// );
 
-const allowedOrigins = ["http://localhost:3500", "https://gooddev.netlify.app", "https://wallet.gooddollar.org"];
-app.use(function(req, res, next) {
-  let origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
-  }
+app.use(
+  cors({
+    origin: 'https://gooddev.netlify.app',//process.env.REACT_APP_CANONICAL_ROOT_URL, //TODO security
+    credentials: true, //??????? ce face??? oricum e doar pt local?
+  })
+);
 
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+// const allowedOrigins = ["http://localhost:3000", "https://gooddev.netlify.app", "https://wallet.gooddollar.org"];
+// app.use(function(req, res, next) {
+//   let origin = req.headers.origin;
+//   if (allowedOrigins.includes(origin)) {
+//     res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
+//   }
 
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  //res.setHeader('Access-Control-Allow-Credentials', true);
+//   // Request methods you wish to allow
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-  // res.header(
-  //   "Access-Control-Allow-Headers",
-  //   "Origin, X-Requested-With, Content-Type, Accept"
-  // );
-  next();
-});
+//   // Request headers you wish to allow
+//   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+//   // Set to true if you need the website to include cookies in the requests sent
+//   // to the API (e.g. in case you use sessions)
+//   //res.setHeader('Access-Control-Allow-Credentials', true);
+
+//   // res.header(
+//   //   "Access-Control-Allow-Headers",
+//   //   "Origin, X-Requested-With, Content-Type, Accept"
+//   // );
+//   next();
+// });
 
 app.use(cookieParser());
 app.use('/.well-known', wellKnownRouter);
