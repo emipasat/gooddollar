@@ -103,6 +103,11 @@ export const transitionPrivileged = body => {
   return post('/api/transition-privileged', body);
 };
 
+// TODO this is now unsecure
+export const acceptPrivileged = body => {
+  return post('/api/accept-privileged', body);
+};
+
 // Create user with identity provider (e.g. Facebook or Google)
 //
 // If loginWithIdp api call fails and user can't authenticate to Flex with idp

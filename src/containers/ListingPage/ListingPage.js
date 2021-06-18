@@ -57,6 +57,8 @@ import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
+import moment from 'moment';
+
 import css from './ListingPage.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -103,11 +105,14 @@ export class ListingPageComponent extends Component {
     const listing = getListing(listingId);
 
     const { bookingStartTime, bookingEndTime, ...restOfValues } = values;
-    const bookingStart = timestampToDate(bookingStartTime);
-    const bookingEnd = timestampToDate(bookingEndTime);
+    //const bookingStart = timestampToDate(bookingStartTime);
+    //const bookingEnd = timestampToDate(bookingEndTime);
+
+    const bookingStart = moment().add(1, 'days').toDate();
+    const bookingEnd = moment().add(2, 'days').toDate();
 
     const bookingData = {
-      quantity: calculateQuantityFromHours(bookingStart, bookingEnd),
+      quantity: 1, //calculateQuantityFromHours(bookingStart, bookingEnd),
       ...restOfValues,
     };
 

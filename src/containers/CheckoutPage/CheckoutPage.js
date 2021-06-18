@@ -51,10 +51,15 @@ import {
 
 import config from '../../config';
 
+
+
 import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.module.css';
 
 const STORAGE_KEY = 'CheckoutPage';
+const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
+const apiPort = process.env.REACT_APP_DEV_API_SERVER_PORT;
+// is it open? for heroku is 80 luckly
 
 export class CheckoutPageComponent extends Component {
   constructor(props) {
@@ -68,6 +73,8 @@ export class CheckoutPageComponent extends Component {
 
     this.loadInitialData = this.loadInitialData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillMount() {
@@ -138,19 +145,55 @@ export class CheckoutPageComponent extends Component {
     if (hasData) {
       const listingId = pageData.listing.id;
       const { bookingStart, bookingEnd } = pageData.bookingDates;
+      const { quantity } = pageData.bookingData;
 
       // Fetch speculated transaction for showing price in booking breakdown
       // NOTE: if unit type is line-item/units, quantity needs to be added.
       // The way to pass it to checkout page is through pageData.bookingData
+
+      
       fetchSpeculatedTransaction({
         listingId,
-        bookingStart: bookingStartForAPI,
-        bookingEnd: bookingEndForAPI,
+        bookingStart: bookingStart,
+        bookingEnd: bookingEnd,
+        quantity: quantity
       });
     }
 
     this.setState({ pageData: pageData || {}, dataLoaded: true });
   }
+
+  openWindow() {
+    const w = window.open('', '_blank');
+    w.document.write("<html><head></head><body>Please wait while we redirect you</body></html>");
+    w.document.close();
+    //const url = await getUrlAsync();
+    //w.location = url1;  
+    
+    if (this && this.state.pageData.myUrl)
+    {
+      w.location = url1;
+    }
+  }
+
+  
+  handleClick()
+  {
+    const w = window.open('', '_blank');
+    w.document.write("<html><head></head><body>Please wait while we redirect you</body></html>");
+    w.document.close();
+    //const url = await getUrlAsync();
+    //w.location = url1;  
+    
+    setTimeout(()=> {
+      if (this && this.state.pageData.myUrl)
+      {
+        w.location = this.state.pageData.myUrl;
+      }
+    }, 1500);
+    
+  }
+
 
   handleSubmit(values) {
     console.log('Handle submit', values);
@@ -175,8 +218,9 @@ export class CheckoutPageComponent extends Component {
     // The way to pass it to checkout page is through pageData.bookingData
     const requestParams = {
       listingId: this.state.pageData.listing.id,
-      bookingStart: speculatedTransaction.booking.attributes.start,
-      bookingEnd: speculatedTransaction.booking.attributes.end,
+      bookingStart: this.state.pageData.bookingDates.bookingStart,// speculatedTransaction.booking.attributes.start,
+      bookingEnd: this.state.pageData.bookingDates.bookingEnd, //speculatedTransaction.booking.attributes.end,
+      quantity: this.state.pageData.bookingData.quantity
     };
 
     const enquiredTransaction = this.state.pageData.enquiredTransaction;
@@ -189,6 +233,52 @@ export class CheckoutPageComponent extends Component {
       onSendMessage({ ...params, message: initialMessage })
         .then(values => {
           console.log('values', values);
+
+          //aici open link, ca am tx id
+          let finalUrl = '';
+
+          const account = 'm';
+          const amount = 'a';
+          const product = 'r';
+          const category = 'cat';
+          const ven = 'ven';
+          const cbu = 'cbu';
+          const web = 'web';
+          const ind = 'ind';
+
+          const venObj = {
+            //[cbu]: canonicalRootURL + '/order/' + values.orderId.uuid + '/details',
+            [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + values.orderId.uuid,
+            [web]: canonicalRootURL,
+            [ven]: 'Good Dollar Marketplace',
+            [ind]: 'used_for_what'
+          };
+
+          const obj = {
+              [account]: this.state.pageData.listing.author.attributes.profile.publicData.goodDollarAccount,
+              [amount]: this.state.pageData.listing.attributes.price.amount,
+              [product]: this.state.pageData.listing.attributes.title,
+              [category]: 'Other',
+              [ven]: venObj
+          };
+          console.log(obj);
+
+          let objJsonStr = JSON.stringify(obj);
+          let objJsonB64 = Buffer.from(objJsonStr).toString("base64");  
+
+          finalUrl = 'https://gooddev.netlify.app?code=' + objJsonB64;
+
+          console.log(finalUrl);
+
+          //var windowFeatures = "menubar=no,location=yes,resizable=yes,scrollbars=yes,status=no,width=600,height=800";
+          //var myWindow = window.open(finalUrl, "_blank", windowFeatures);
+
+
+          this.state.pageData.myUrl = finalUrl;
+
+
+
+
           const { orderId, messageSuccess } = values;
           this.setState({ submitting: false });
           const routes = routeConfiguration();
@@ -228,8 +318,6 @@ export class CheckoutPageComponent extends Component {
     } = this.props;
 
     const external_link="https://wallet.gooddollar.org?code="; //
-    const internal_link="http://localhost:3000/about";
-
 
 
     // Since the listing data is already given from the ListingPage
@@ -492,6 +580,8 @@ export class CheckoutPageComponent extends Component {
                   type="submit"
                   inProgress={this.state.submitting}
                   disabled={false}
+                  // onClick={this.openWindow}
+                  onClick={() => this.handleClick()}
                 >
                   Confirm booking
                 </PrimaryButton>
@@ -509,12 +599,25 @@ export class CheckoutPageComponent extends Component {
     const product = 'r';
     const category = 'cat';
     const returnUrl = 'returnUrl';
+    const ven = 'ven';
+    const cbu = 'cbu';
+    const web = 'web';
+    const ind = 'ind';
+
+    const venObj = {
+      [cbu]: 'http://localhost:3000/inbox/orders',
+      [web]: 'http://localhost:3000',
+      [ven]: 'Good Dollar Marketplace',
+      [ind]: 'used_for_what'
+    };
+
     const obj = {
         [account]: currentAuthor.attributes.profile.publicData.goodDollarAccount,
         [amount]: listing.attributes.price.amount,
         [product]: listing.attributes.title,
         [category]: 'Other',
-        [returnUrl]: 'http://localhost:3000/inbox/orders' //TODO TBD
+        [ven]: venObj
+        //[returnUrl]: 'http://localhost:3000/inbox/orders' //TODO TBD
     };
     console.log(obj);
 
