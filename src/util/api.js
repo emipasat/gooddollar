@@ -104,13 +104,11 @@ export const transitionPrivileged = body => {
 };
 
 // TODO this is now unsecure
-//export const acceptPrivileged = body => {
-//  return post('/api/accept-privileged', body);
-//};
-
 export const acceptPrivileged = body => {
-  return get('/api/accept-privileged', body);
+ return post('/api/accept-privileged', body);
 };
+
+
 
 // Create user with identity provider (e.g. Facebook or Google)
 //
