@@ -51,7 +51,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.options('*', cors())
+//app.options('*', cors()) // NU E BUN, nu'l mai pune
 
 app.use(cookieParser());
 app.use('/.well-known', wellKnownRouter);
