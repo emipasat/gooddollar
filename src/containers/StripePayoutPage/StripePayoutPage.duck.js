@@ -2,6 +2,7 @@ import merge from 'lodash/merge';
 import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { fetchCurrentUser, currentUserShowSuccess } from '../../ducks/user.duck';
+import { decode, encode, isMNID } from 'mnid'
 
 // ================ Action types ================ //
 
@@ -74,11 +75,17 @@ export const saveStripePayoutClear = () => ({ type: SAVE_STRIPE_PAYOUT_CLEAR });
  * Make a phone number update request to the API and return the current user.
  */
 const requestSaveGoodDollarAccount = params => (dispatch, getState, sdk) => {
-  const goodDollarAccount = params.goodDollarAccount;
+  const goodDollarAccountAddress = params.goodDollarAccount;
+  // this should be the address 0x5A5C943FC6aA7b29499eE3734Af3eD5071410676
+  // convert it to the one which base64 understands
+
+  const networkId = 122;
+  const goodDollarAccount = encode({ goodDollarAccountAddress, network: `0x${networkId.toString(16)}` })
+
 
   return sdk.currentUser
     .updateProfile(
-      { protectedData: { goodDollarAccount } },
+      { publicData: { goodDollarAccount } },
       {
         expand: true,
         include: ['profileImage'],
