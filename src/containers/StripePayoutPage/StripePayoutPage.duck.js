@@ -80,7 +80,10 @@ const requestSaveGoodDollarAccount = params => (dispatch, getState, sdk) => {
   // convert it to the one which base64 understands
 
   const networkId = 122;
-  const goodDollarAccount = encode({ goodDollarAccountAddress, network: `0x${networkId.toString(16)}` })
+  const goodDollarAccount = encode({ 
+    network: `0x${networkId.toString(16)}`,
+    address: goodDollarAccountAddress 
+  })
 
 
   return sdk.currentUser
