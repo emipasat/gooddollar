@@ -9,6 +9,7 @@ import routeConfiguration from '../../routeConfiguration';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { LISTING_STATE_PENDING_APPROVAL, LISTING_STATE_CLOSED, propTypes } from '../../util/types';
 import { types as sdkTypes } from '../../util/sdkLoader';
+//import axios from 'axios';
 import {
   LISTING_PAGE_DRAFT_VARIANT,
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
@@ -92,6 +93,18 @@ export class ListingPageComponent extends Component {
     this.onContactUser = this.onContactUser.bind(this);
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
   }
+
+  // componentDidMount() {
+  //   axios.options(`http://localhost:3500/api/accept-privileged?txId=60cc9ab3-040c-4a89-8169-c38e65a6328f`)
+  //     .then(res1 => {
+  //       console.log(re1);
+  //     });
+  //   axios.post(`http://localhost:3500/api/accept-privileged?txId=60cc9ab3-040c-4a89-8169-c38e65a6328f`)
+  //     .then(res => {
+  //       const persons = res.data;
+  //       this.setState({ persons });
+  //     })
+  // }
 
   handleSubmit(values) {
     const {
