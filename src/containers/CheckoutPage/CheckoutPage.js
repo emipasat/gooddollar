@@ -267,6 +267,7 @@ export class CheckoutPageComponent extends Component {
           let objJsonB64 = Buffer.from(objJsonStr).toString("base64");  
 
           finalUrl = 'https://gooddev.netlify.app?code=' + objJsonB64;
+          //TODO move it on env vars
 
           console.log(finalUrl);
 
@@ -592,6 +593,7 @@ export class CheckoutPageComponent extends Component {
       />
     );
 
+    /*
     let finalUrl = '';
 
     const account = 'm';
@@ -625,7 +627,7 @@ export class CheckoutPageComponent extends Component {
     let objJsonB64 = Buffer.from(objJsonStr).toString("base64");  
 
     finalUrl = external_link + objJsonB64;
-
+    */
     return (
       <Page {...pageProps}>
         {topbar}
