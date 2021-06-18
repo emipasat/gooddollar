@@ -63,6 +63,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "seedrandom": "^3.0.5",
+    "sharetribe-flex-integration-sdk": "^1.4.0",
     "sharetribe-flex-sdk": "1.13.0",
     "sharetribe-scripts": "5.0.0",
     "smoothscroll-polyfill": "^0.4.0",

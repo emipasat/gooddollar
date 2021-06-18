@@ -2,7 +2,9 @@ const { transactionLineItems } = require('../api-util/lineItems');
 const { getSdk, getTrustedSdk, handleError, serialize } = require('../api-util/sdk');
 
 module.exports = (req, res) => {
-  const { isSpeculative, bookingData, bodyParams, queryParams } = req.body;
+  const { isSpeculative,  bodyParams, queryParams } = req.body;
+
+  const bookingData = { quantity: bodyParams.params.quantity };
 
   const listingId = bodyParams && bodyParams.params ? bodyParams.params.listingId : null;
 

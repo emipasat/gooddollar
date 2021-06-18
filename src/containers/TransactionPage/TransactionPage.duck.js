@@ -689,10 +689,117 @@ export const loadData = params => (dispatch, getState) => {
   const initialValues = txRef ? {} : pickBy(state, isNonEmpty);
   dispatch(setInitialValues(initialValues));
 
+  const checkIfShouldPollVal = dispatch(checkIfShouldPoll(txId,txRole));
+  checkIfShouldPollVal.then(x=> {
+    if (x)
+    {
+      dispatch(poll(txId, txRole));
+    }
+  });
+  
+
   // Sale / order (i.e. transaction entity in API)
   return Promise.all([
     dispatch(fetchTransaction(txId, txRole)),
     dispatch(fetchMessages(txId, 1)),
-    dispatch(fetchNextTransitions(txId)),
+    dispatch(fetchNextTransitions(txId)),    
   ]);
+};
+
+const sleep = (time) => {
+  // Time is in milliseconds
+  return new Promise((resolve) => setTimeout(resolve, time));
+};
+
+
+const checkIfShouldPoll = (id, txRole) => async (dispatch, getState, sdk) => {
+  if (txRole == 'provider')
+  {
+    return false;
+  }
+
+  
+    return sdk.transactions
+      .show(
+        {
+          id,
+          include: [
+            'customer',
+            'customer.profileImage',
+            'provider',
+            'provider.profileImage',
+            'listing',
+            'booking',
+            'reviews',
+            'reviews.author',
+            'reviews.subject',
+          ],
+          ...IMAGE_VARIANTS,
+        },
+        { expand: true }
+      )
+      .then(response => {
+        
+        const listingId = listingRelationship(response).id;
+        const entities = updatedEntities({}, response.data);
+        const listingRef = { id: listingId, type: 'listing' };
+        const transactionRef = { id, type: 'transaction' };
+        const denormalised = denormalisedEntities(entities, [listingRef, transactionRef]);
+        const listing = denormalised[0];
+        const transaction = denormalised[1];
+
+        if (transaction.attributes.lastTransition === 'transition/accept')
+        {
+          return false;
+        }
+        return true; //TODO only la pending payment
+      });
+      
+};
+
+const poll = (id, txRole) => async (dispatch, getState, sdk) => {
+  if (txRole == 'provider')
+  {
+    return;
+  }
+
+  for (var j=0; j< 100; j++)
+  {
+    await sleep(2500);
+    console.log(j+ ' xxx');
+    sdk.transactions
+      .show(
+        {
+          id,
+          include: [
+            'customer',
+            'customer.profileImage',
+            'provider',
+            'provider.profileImage',
+            'listing',
+            'booking',
+            'reviews',
+            'reviews.author',
+            'reviews.subject',
+          ],
+          ...IMAGE_VARIANTS,
+        },
+        { expand: true }
+      )
+      .then(response => {
+        
+        const listingId = listingRelationship(response).id;
+        const entities = updatedEntities({}, response.data);
+        const listingRef = { id: listingId, type: 'listing' };
+        const transactionRef = { id, type: 'transaction' };
+        const denormalised = denormalisedEntities(entities, [listingRef, transactionRef]);
+        const listing = denormalised[0];
+        const transaction = denormalised[1];
+
+        if (transaction.attributes.lastTransition === 'transition/accept')
+        {
+          window.location.reload();
+        }
+      });
+  }
 };
