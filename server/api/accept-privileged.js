@@ -2,8 +2,8 @@
 const { transactionLineItems } = require('../api-util/lineItems');
 const { getSdk, getTrustedSdk, handleError, serialize } = require('../api-util/sdk');
 const flexIntegrationSdk = require('sharetribe-flex-integration-sdk');
-const CLIENT_ID = "5cf914e4-9934-4c3f-a45d-e445a625e109";//process.env.REACT_APP_SHARETRIBE_SDK_CLIENT_ID;
-const CLIENT_SECRET = "e0684a7d8955341c79eeb434e7eaacdc8784b183";//process.env.SHARETRIBE_SDK_CLIENT_SECRET;
+const CLIENT_ID = process.env.FLEX_INTEGRATION_CLIENT_ID;
+const CLIENT_SECRET = process.env.FLEX_INTEGRATION_CLIENT_SECRET;
 
 //const types =require('../../src/util/sdkLoader'); //'../scr../../util/sdkLoader';
 //const { UUID } = types;
