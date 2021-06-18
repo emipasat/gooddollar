@@ -18,6 +18,7 @@ const app = express();
 // NOTE: CORS is only needed in this dev API server because it's
 // running in a different port than the main app.
 
+
 app.use(
   cors({
     origin: process.env.REACT_APP_CANONICAL_ROOT_URL, //TODO security
@@ -49,6 +50,8 @@ app.use(
 //   // );
 //   next();
 // });
+
+app.options('*', cors())
 
 app.use(cookieParser());
 app.use('/.well-known', wellKnownRouter);

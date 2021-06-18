@@ -9,7 +9,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { deserialize } = require('./api-util/sdk');
-const cors = require('cors');
+//const cors = require('cors');
 
 const initiateLoginAs = require('./api/initiate-login-as');
 const loginAs = require('./api/login-as');
@@ -67,7 +67,7 @@ router.get('/initiate-login-as', initiateLoginAs);
 router.get('/login-as', loginAs);
 router.post('/transaction-line-items', transactionLineItems);
 router.post('/initiate-privileged', initiatePrivileged);
-router.post('/transition-privileged', cors(corsOptions), transitionPrivileged);
+router.post('/transition-privileged', transitionPrivileged);
 
 //TODO settle on one
 //router.post('/accept-privileged', acceptPrivileged);
