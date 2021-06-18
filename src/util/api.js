@@ -108,6 +108,10 @@ export const acceptPrivileged = body => {
   return post('/api/accept-privileged', body);
 };
 
+export const acceptPrivilegedGet = body => {
+  return get('/api/accept-privileged', body);
+};
+
 // Create user with identity provider (e.g. Facebook or Google)
 //
 // If loginWithIdp api call fails and user can't authenticate to Flex with idp
