@@ -47,14 +47,14 @@ exports.transactionLineItems = (listing, bookingData) => {
     includeFor: ['customer', 'provider'],
   };
 
-  const providerCommission = {
-    code: 'line-item/provider-commission',
-    unitPrice: calculateTotalFromLineItems([booking]),
-    percentage: PROVIDER_COMMISSION_PERCENTAGE,
-    includeFor: ['provider'],
-  };
+  // const providerCommission = {
+  //   code: 'line-item/provider-commission',
+  //   unitPrice: calculateTotalFromLineItems([booking]),
+  //   percentage: PROVIDER_COMMISSION_PERCENTAGE,
+  //   includeFor: ['provider'],
+  // };
 
-  const lineItems = [booking, providerCommission];
+  const lineItems = [booking];//, providerCommission];
 
   return lineItems;
 };
