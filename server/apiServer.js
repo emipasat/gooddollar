@@ -20,7 +20,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'https://gooddev.netlify.app',//process.env.REACT_APP_CANONICAL_ROOT_URL, //TODO security
+    origin: process.env.REACT_APP_CANONICAL_ROOT_URL, //TODO security
     credentials: true, //??????? ce face??? oricum e doar pt local?
   })
 );

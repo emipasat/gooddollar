@@ -51,11 +51,22 @@ router.use((req, res, next) => {
 
 // ================ API router endpoints: ================ //
 
+var whitelist = ["http://localhost:3000", "https://gooddev.netlify.app", "https://wallet.gooddollar.org"]
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 router.get('/initiate-login-as', initiateLoginAs);
 router.get('/login-as', loginAs);
 router.post('/transaction-line-items', transactionLineItems);
 router.post('/initiate-privileged', initiatePrivileged);
-router.post('/transition-privileged', transitionPrivileged);
+router.post('/transition-privileged', cors(corsOptions), transitionPrivileged);
 
 //TODO settle on one
 //router.post('/accept-privileged', acceptPrivileged);
