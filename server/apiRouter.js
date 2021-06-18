@@ -80,6 +80,7 @@ router.post('/transition-privileged', transitionPrivileged);
 
 //TODO settle on one
 //router.post('/accept-privileged', acceptPrivileged);
+router.options('/accept-privileged', cors());
 router.post('/accept-privileged', acceptPrivileged); //,cors(corsOptions), headers,
 
 // Create user with identity provider (e.g. Facebook or Google)
