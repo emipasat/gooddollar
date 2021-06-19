@@ -75,6 +75,7 @@ const BookingPanel = props => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
+    noAccountAddedMessage
   } = props;
 
   const price = listing.attributes.price ? listing.attributes.price : new Money(listing.attributes.publicData.priceInG, 'USD');
@@ -82,7 +83,7 @@ const BookingPanel = props => {
     listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
-  const showBookingTimeForm = hasListingState && !isClosed;
+  const showBookingTimeForm = hasListingState && !isClosed && (noAccountAddedMessage === '');
   const showClosedListingHelpText = listing.id && isClosed;
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
@@ -133,6 +134,7 @@ const BookingPanel = props => {
           </div>
         </div>
 
+        {noAccountAddedMessage}
         {showBookingTimeForm ? (
           <BookingTimeForm
             className={css.bookingForm}
@@ -192,6 +194,7 @@ BookingPanel.defaultProps = {
   monthlyTimeSlots: null,
   lineItems: null,
   fetchLineItemsError: null,
+  noAccountAddedMessage: ''
 };
 
 BookingPanel.propTypes = {
@@ -212,6 +215,8 @@ BookingPanel.propTypes = {
   lineItems: array,
   fetchLineItemsInProgress: bool.isRequired,
   fetchLineItemsError: propTypes.error,
+
+  noAccountAddedMessage: propTypes.string,
 
   // from withRouter
   history: shape({
