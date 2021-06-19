@@ -189,9 +189,18 @@ export class CheckoutPageComponent extends Component {
       if (this && this.state.pageData.myUrl)
       {
         w.location = this.state.pageData.myUrl;
-        //this.state.pageData.window = w;
+        this.state.pageData.window = w;
       }
     }, 1500);
+
+
+    window.onbeforeunload = (event) => {
+
+      if (this && this.state.pageData.window)
+      {
+        this.state.pageData.window.close();
+      }
+    };
     
   }
 
