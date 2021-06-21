@@ -117,11 +117,11 @@ export const filters = [
     },
   },
   {
-    id: 'categories',
+    id: 'category',
     label: 'Categories',
     type: 'SelectSingleFilter',
     group: 'primary',
-    queryParamNames: ['pub_categories'],
+    queryParamNames: ['pub_category'],
 
     config: {
       options: [
