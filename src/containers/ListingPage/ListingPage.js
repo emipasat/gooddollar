@@ -349,7 +349,7 @@ export class ListingPageComponent extends Component {
 
     if (!currentAuthor.attributes.profile.publicData || !currentAuthor.attributes.profile.publicData.goodDollarAccount)
     {
-      noAccountAddedMessage = "This user doesn't added his G$ account yet.";
+      noAccountAddedMessage = "This user doesn't added his G$ account yet. Contact him and ask him to add it to his profile.";
     }
 
     const handleBookingSubmit = values => {
