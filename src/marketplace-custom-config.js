@@ -119,49 +119,30 @@ export const filters = [
   {
     id: 'categories',
     label: 'Categories',
-    type: 'SelectMultipleFilter',
+    type: 'SelectSingleFilter',
     group: 'primary',
     queryParamNames: ['pub_categories'],
+
     config: {
-      // Optional modes: 'has_all', 'has_any'
-      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
-      searchMode: 'has_all',
-
-      // "key" is the option you see in Flex Console.
-      // "label" is set here for this web app's UI only.
-      // Note: label is not added through the translation files
-      // to make filter customizations a bit easier.
-
-      // ART AND COLLECTIBLES
-      // APPAREL
-      // CHARITABLE ORGANIZATIONS (DONATE G$)
-      // DIGITAL SERVICES (ONLINE)
-      // ELECTRONICS
-      // FOOD AND GROCERY
-      // HOME AND GARDEN
-      // LOCAL SERVICES
-      // MUSICAL INSTRUMENTS
-      // OFFERS (EARN G$ FOR COMPLETING TASKS)
-      // PET SUPPLIES
-      // SPORTING GOODS
-      // TOYS AND GAMES
-
-
       options: [
         {
-          key: 'art',
+          key: 'artAndCollectibles',
           label: 'Art and collectibles',
         },
         {
-          key: 'apparel',
-          label: 'Apparel',
+          key: 'mensApparel',
+          label: 'Mens apparel',
         },
         {
-          key: 'charitable',
+          key: 'womensApparel',
+          label: 'Womens apparel',
+        },
+        {
+          key: 'charitableOrganizationsDonateG',
           label: 'Charitable organisations (donate G$)',
         },
         {
-          key: 'digital',
+          key: 'digitalServicesOnline',
           label: 'Digital services (online)',
         },
         {
@@ -169,36 +150,52 @@ export const filters = [
           label: 'electronics',
         },
         {
-          key: 'food',
+          key: 'foodAndGrocery',
           label: 'food and grocery',
         },
         {
-          key: 'home',
+          key: 'homeAndGarden',
           label: 'Home and garden',
         },
         {
-          key: 'local',
+          key: 'localServices',
           label: 'Local services',
         },
         {
-          key: 'musical',
+          key: 'musicalInstruments',
           label: 'Musical instruments',
         },
         {
-          key: 'offers',
+          key: 'offersEarnGForCompletingTasks',
           label: 'Offers (earn G$ for completing tasks)',
         },
         {
-          key: 'pet',
+          key: 'petSupplies',
           label: 'Pet supplies',
         },
         {
-          key: 'sporting',
+          key: 'sportingGoods',
           label: 'Sporting goods',
         },
         {
-          key: 'toys',
+          key: 'toysAndGames',
           label: 'Toys and games',
+        },
+        {
+          key: 'languageTutors',
+          label: 'Language tutors',
+        },
+        {
+          key: 'logoDesign',
+          label: 'Logo design',
+        },
+        {
+          key: 'cryptocurrencyAndBlockchain',
+          label: 'Cryptocurrency and blockchain',
+        },
+        {
+          key: 'professionalServices',
+          label: 'Professional services',
         },
         
       ],

@@ -7,7 +7,8 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form } from '../../components';
+import { Button, FieldCheckboxGroup, Form, FieldSelect } from '../../components';
+import {  required, composeValidators} from '../../util/validators';
 
 import css from './EditListingFeaturesForm.module.css';
 
@@ -55,7 +56,16 @@ const EditListingFeaturesFormComponent = props => (
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} />
+          <FieldSelect className={css.category} name={name} id={name} label={""} validate={composeValidators(required("You need to pick a category"))}>
+              <option key="placeholder" value="" disabled selected hidden>
+                {"Select a category..."}
+              </option>
+              {options.map(c => (
+                <option key={c.key} value={c.key} >
+                  {c.label}
+                </option>
+              ))}
+            </FieldSelect>
 
           <Button
             className={css.submitButton}
