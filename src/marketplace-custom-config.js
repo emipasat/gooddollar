@@ -117,6 +117,94 @@ export const filters = [
     },
   },
   {
+    id: 'categories',
+    label: 'Categories',
+    type: 'SelectMultipleFilter',
+    group: 'primary',
+    queryParamNames: ['pub_categories'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_all',
+
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+
+      // ART AND COLLECTIBLES
+      // APPAREL
+      // CHARITABLE ORGANIZATIONS (DONATE G$)
+      // DIGITAL SERVICES (ONLINE)
+      // ELECTRONICS
+      // FOOD AND GROCERY
+      // HOME AND GARDEN
+      // LOCAL SERVICES
+      // MUSICAL INSTRUMENTS
+      // OFFERS (EARN G$ FOR COMPLETING TASKS)
+      // PET SUPPLIES
+      // SPORTING GOODS
+      // TOYS AND GAMES
+
+
+      options: [
+        {
+          key: 'art',
+          label: 'Art and collectibles',
+        },
+        {
+          key: 'apparel',
+          label: 'Apparel',
+        },
+        {
+          key: 'charitable',
+          label: 'Charitable organisations (donate G$)',
+        },
+        {
+          key: 'digital',
+          label: 'Digital services (online)',
+        },
+        {
+          key: 'electronics',
+          label: 'electronics',
+        },
+        {
+          key: 'food',
+          label: 'food and grocery',
+        },
+        {
+          key: 'home',
+          label: 'Home and garden',
+        },
+        {
+          key: 'local',
+          label: 'Local services',
+        },
+        {
+          key: 'musical',
+          label: 'Musical instruments',
+        },
+        {
+          key: 'offers',
+          label: 'Offers (earn G$ for completing tasks)',
+        },
+        {
+          key: 'pet',
+          label: 'Pet supplies',
+        },
+        {
+          key: 'sporting',
+          label: 'Sporting goods',
+        },
+        {
+          key: 'toys',
+          label: 'Toys and games',
+        },
+        
+      ],
+    },
+  },
+  {
     id: 'certificate',
     label: 'Certificate',
     type: 'SelectSingleFilter',
