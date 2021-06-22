@@ -404,7 +404,7 @@ export class ListingPageComponent extends Component {
       </NamedLink>
     );
 
-    const categoriesOptions = findOptionsForSelectFilter('categories', filterConfig);
+    const categoriesOptions = findOptionsForSelectFilter('category', filterConfig);
     const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
 
     return (

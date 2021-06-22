@@ -109,12 +109,12 @@ const EditListingDescriptionFormComponent = props => (
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
 
-          <CustomCertificateSelectFieldMaybe
+          {/* <CustomCertificateSelectFieldMaybe
             id="certificate"
             name="certificate"
             certificateOptions={certificateOptions}
             intl={intl}
-          />
+          /> */}
 
           <Button
             className={css.submitButton}
