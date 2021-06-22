@@ -594,7 +594,7 @@ export class CheckoutPageComponent extends Component {
                   // onClick={this.openWindow}
                   onClick={() => this.handleClick()}
                 >
-                  Confirm booking
+                  Confirm buying
                 </PrimaryButton>
               </div>
             </Form>
