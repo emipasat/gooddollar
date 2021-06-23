@@ -179,7 +179,7 @@ export class CheckoutPageComponent extends Component {
   
   handleClick()
   {
-    const w = window.open('', '_blank');
+    const w = window.open('', '_blank', "height=950,width=560");
     w.document.write("<html><head></head><body>Please wait while we load your wallet</body></html>");
     w.document.close();
     //const url = await getUrlAsync();
