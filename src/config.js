@@ -99,13 +99,13 @@ const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
 const siteTitle = 'GoodDollar';
 
 // Twitter handle is needed in meta tags (twitter:site). Start it with '@' character
-const siteTwitterHandle = '@gooddollar';
+const siteTwitterHandle = '@gooddollarorg';
 
 // Instagram page is used in SEO schema (http://schema.org/Organization)
 const siteInstagramPage = null;
 
 // Facebook page is used in SEO schema (http://schema.org/Organization)
-const siteFacebookPage = 'https://www.facebook.com/goodDollar/';
+const siteFacebookPage = 'https://www.facebook.com/gooddollarorg';
 
 // Social logins & SSO
 

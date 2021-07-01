@@ -276,7 +276,7 @@ export class CheckoutPageComponent extends Component {
           let objJsonStr = JSON.stringify(obj);
           let objJsonB64 = Buffer.from(objJsonStr).toString("base64");  
 
-          finalUrl = 'https://gooddev.netlify.app?code=' + objJsonB64;
+          finalUrl = process.env.REACT_APP_WALLET_URL + '?code=' + objJsonB64;
           //TODO move it on env vars
 
           console.log(finalUrl);
