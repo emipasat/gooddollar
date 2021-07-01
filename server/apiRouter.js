@@ -25,7 +25,8 @@ const { authenticateFacebook, authenticateFacebookCallback } = require('./api/au
 const { authenticateGoogle, authenticateGoogleCallback } = require('./api/auth/google');
 
 const headers = (req, res, next) => {
-	const origin = (req.headers.origin == 'http://localhost:3000') ? 'http://localhost:3000' : 'https://gooddev.netlify.app'
+	const origin = (req.headers.origin == 'http://localhost:3000') ? 'http://localhost:3000' : 
+                  (req.headers.origin == 'https://gooddev.netlify.app') ? 'https://gooddev.netlify.app' : 'https://wallet.gooddollar.org/'
 	res.setHeader('Access-Control-Allow-Origin', origin)
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
