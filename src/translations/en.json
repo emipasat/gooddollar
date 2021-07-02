@@ -1004,7 +1004,7 @@
   "StripeConnectAccountForm.loadingStripeAccountData": "Fetching payout details…",
   "StripeConnectAccountForm.stripeToSText": "By saving details, you agree to the {stripeConnectedAccountTermsLink}",
   "StripeConnectAccountForm.stripeConnectedAccountTermsLink": "Stripe Connected Account Agreement",
-  "StripePayoutPage.heading": "Payout details",
+  "StripePayoutPage.heading": "Please enter your GoodDollar Wallet Address:",
   "StripePayoutPage.loadingData": "Loading data…",
   "StripePayoutPage.redirectingToStripe": "You returned early from Stripe. Redirecting you back to Stripe…",
   "StripePayoutPage.stripeNotConnected": "Payment information not saved. Please fill in the form to accept payments from your listings.",
