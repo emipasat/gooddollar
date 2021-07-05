@@ -32,10 +32,11 @@ class SearchMapPriceLabel extends Component {
     const { price } = currentListing.attributes;
 
     let formattedPrice;
-    if (price === null)
+    if (price === null || price.amount==0)
     {
       formattedPrice =
-         formatMoney(intl, new Money(currentListing.attributes.publicData.priceInG, 'USD'));
+         formatMoney(intl, new Money(currentListing.attributes.publicData.priceInG * 100, 'USD'));
+         // TODO quick hack for formatting issue. ! to be fixed
     }
     else 
     {

@@ -12,11 +12,33 @@ import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { NamedLink, ResponsiveImage } from '../../components';
 
+import { types as sdkTypes } from '../../util/sdkLoader';
+
 import css from './ListingCard.module.css';
+
+const { Money } = sdkTypes;
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
-const priceData = (price, intl) => {
+const priceData = (price, intl, priceInG) => {
+
+  let formattedPrice;
+  if (price === null || price.amount==0)
+  {
+    formattedPrice =
+        formatMoney(intl, new Money(priceInG * 100, 'USD'));
+        //TODO search after priceInG for this hack
+
+    return { formattedPrice, priceTitle: formattedPrice };
+  }
+  else 
+  {
+    // Create formatted price if currency is known or alternatively show just the unknown currency.
+    formattedPrice =
+      price && price.currency === config.currency ? formatMoney(intl, price) : price.currency;
+  }
+
+
   if (price && price.currency === config.currency) {
     const formattedPrice = formatMoney(intl, price);
     return { formattedPrice, priceTitle: formattedPrice };
@@ -60,6 +82,7 @@ export const ListingCardComponent = props => {
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
   const { title = '', price, publicData } = currentListing.attributes;
+  const priceInG = publicData.priceInG;
 
   const author = ensureUser(listing.author);
   const authorName = author.attributes.profile.displayName;
@@ -73,7 +96,7 @@ export const ListingCardComponent = props => {
   const certificate = publicData
     ? getCertificateInfo(certificateOptions, publicData.certificate)
     : null;
-  const { formattedPrice, priceTitle } = priceData(price, intl);
+  const { formattedPrice, priceTitle } = priceData(price, intl, priceInG);
 
   const unitType = config.bookingUnitType;
   const isNightly = unitType === LINE_ITEM_NIGHT;

@@ -24,10 +24,11 @@ const ListingCard = props => {
   
   
   let formattedPrice;
-  if (price === null)
+  if (price === null || price.amount==0)
   {
     formattedPrice =
-        formatMoney(intl, new Money(listing.attributes.publicData.priceInG, 'USD'));
+        formatMoney(intl, new Money(listing.attributes.publicData.priceInG * 100, 'USD'));
+        //TODO search after priceInG for this hack
   }
   else 
   {
