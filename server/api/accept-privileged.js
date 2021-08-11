@@ -17,6 +17,16 @@ module.exports = (req, res) => {
         clientSecret: CLIENT_SECRET
     });
 
+    // var response1 = await integrationSdk.transactions.transition({
+    //   id: { uuid: txId, _sdkType: "UUID" },//new UUID(txId), // knowhow in integration ca nu pot importa type, nu stiu de ce
+    //   transition: "transition/accept",
+    //   params: {}
+    // }, {
+    //   expand: true
+    // });
+
+    // console.log(response1);
+
     integrationSdk.transactions.transition({
         id: { uuid: txId, _sdkType: "UUID" },//new UUID(txId), // knowhow in integration ca nu pot importa type, nu stiu de ce
         transition: "transition/accept",
