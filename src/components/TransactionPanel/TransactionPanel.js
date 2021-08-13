@@ -32,6 +32,8 @@ import {
 import { SendMessageForm } from '../../forms';
 import config from '../../config';
 
+import { SecondaryButton } from '../../components';
+
 // These are internal components that make this file more readable.
 import AddressLinkMaybe from './AddressLinkMaybe';
 import BreakdownMaybe from './BreakdownMaybe';
@@ -184,6 +186,7 @@ export class TransactionPanelComponent extends Component {
       intl,
       onAcceptSale,
       onDeclineSale,
+      onCompleteSale,
       acceptInProgress,
       declineInProgress,
       acceptSaleError,
@@ -305,6 +308,16 @@ export class TransactionPanelComponent extends Component {
     const firstImage =
       currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
+
+    let isButtonDisabled = true;
+
+    console.log(currentTransaction);
+
+    if (currentTransaction.attributes.lastTransition === 'transition/accept'){
+        isButtonDisabled = false;
+    }
+  
+
     const saleButtons = (
       <SaleActionButtonsMaybe
         showButtons={stateData.showSaleButtons}
@@ -399,6 +412,21 @@ export class TransactionPanelComponent extends Component {
               onShowMoreMessages={() => onShowMoreMessages(currentTransaction.id)}
               totalMessagePages={totalMessagePages}
             />
+
+
+            {!isProvider && currentTransaction.attributes.lastTransition == "transition/accept" ? (
+              <div className={css.submitContainer} style={{ margin: 30 }}>
+                <SecondaryButton
+                  
+                    rootClassName={isButtonDisabled ? css.cancelButtonDisabled : css.cancelButton}
+                    onClick={() => onCompleteSale(currentTransaction.id)} 
+                  >
+                    
+                    Complete sale
+                  </SecondaryButton>
+              </div>)
+            :null}
+
             {showSendMessageForm ? (
               <SendMessageForm
                 formId={this.sendMessageFormName}
@@ -532,6 +560,7 @@ TransactionPanelComponent.propTypes = {
   // Sale related props
   onAcceptSale: func.isRequired,
   onDeclineSale: func.isRequired,
+  onCompleteSale: func.isRequired,
   acceptInProgress: bool.isRequired,
   declineInProgress: bool.isRequired,
   acceptSaleError: propTypes.error,
