@@ -27,6 +27,7 @@ import {
   txRoleIsCustomer,
   getUserTxRole,
   isRelevantPastTransition,
+  TRANSITION_COMPLETE_BY_CUSTOMER,
 } from '../../util/transaction';
 import { propTypes } from '../../util/types';
 import * as log from '../../util/log';
@@ -145,9 +146,10 @@ const resolveTransitionMessage = (
       );
     case TRANSITION_CANCEL:
       return <FormattedMessage id="ActivityFeed.transitionCancel" />;
+    case TRANSITION_COMPLETE_BY_CUSTOMER:
     case TRANSITION_COMPLETE:
       // Show the leave a review link if the state is delivered and if the current user is the first to leave a review
-      const reviewPeriodJustStarted = txIsDelivered(transaction);
+      const reviewPeriodJustStarted = true;//txIsDelivered(transaction);
 
       const reviewAsFirstLink = reviewPeriodJustStarted ? (
         <InlineTextButton onClick={onOpenReviewModal}>
