@@ -22,6 +22,31 @@
 }
 
 .sectionImages {
+
+  
+
+  @media (--viewportMedium) {
+    max-width: 1056px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    position: relative;
+  }
+
+  @media (--viewportLarge) {
+    max-width: 1128px;
+    padding: 0 36px;
+    margin: 0 auto 117px;
+  }
+
+  @media (--viewportXLarge) {
+    max-width: 1056px;
+    padding: 0;
+  }
+
+  @media only screen and (max-width: 1100px){
+ margin-bottom: 8pc !important;
+  }
 }
 
 .threeToTwoWrapper {
@@ -138,6 +163,9 @@
       box-shadow: var(--boxShadowListingCard);
     }
   }
+
+
+
 }
 
 .viewPhotos {
@@ -254,7 +282,7 @@
 
   @media (--viewportMedium) {
     position: absolute;
-    top: -112px;
+    top: -92px;
     margin-left: 0;
     margin-top: 0;
   }
