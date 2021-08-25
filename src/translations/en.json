@@ -741,10 +741,10 @@
   "ProfileSettingsForm.lastNamePlaceholder": "Doe",
   "ProfileSettingsForm.lastNameRequired": "This field is required",
   "ProfileSettingsForm.saveChanges": "Save changes",
-  "GoodDollarAccountForm.goodDollarAccountPlaceholder":"Your G$ account",
+  "GoodDollarAccountForm.goodDollarAccountPlaceholder":"Your G$ address",
 
   "GoodDollarAccountForm.saveChanges": "Save changes",
-  "GoodDollarAccountForm.goodDollarAccountLabel":"Your G$ account",
+  "GoodDollarAccountForm.goodDollarAccountLabel":"Your G$ address",
 
   "ProfileSettingsForm.tip": "Tip: Choose an image where your face is recognizable.",
   "ProfileSettingsForm.updateProfileFailed": "Whoops, something went wrong. Please try again.",
