@@ -57,7 +57,7 @@ const HeadingCustomerWithSubtitle = props => {
     <React.Fragment>
       <h1 className={className}>
         <span className={css.mainTitle}>
-          <FormattedMessage id={subtitleId} values={values} />
+          <FormattedMessage id={subtitleId} values={subtitleValues} />
         </span>
         {/* <FormattedMessage id={subtitleId} values={subtitleValues} /> */}
       </h1>
