@@ -32,8 +32,12 @@ export const LandingPageComponent = props => {
     scrollingDisabled,
     currentUserListing,
     currentUserListingFetched,
+    currentUser
   } = props;
 
+  if(currentUser){
+    history.push('/s')
+  }
   // Schema for search engines (helps them to understand what this page is about)
   // http://schema.org
   // We are using JSON-LD format
@@ -41,6 +45,8 @@ export const LandingPageComponent = props => {
   const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
   const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
   const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
+  
+  
 
   return (
     <Page
@@ -112,12 +118,13 @@ LandingPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { currentUserListing, currentUserListingFetched } = state.user;
+  const { currentUserListing, currentUserListingFetched, currentUser } = state.user;
 
   return {
     scrollingDisabled: isScrollingDisabled(state),
     currentUserListing,
     currentUserListingFetched,
+    currentUser
   };
 };
 
