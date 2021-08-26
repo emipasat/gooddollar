@@ -221,7 +221,7 @@ export class TransactionPanelComponent extends Component {
     // QR code %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-        const account = 'm';
+  const account = 'm';
   const amount = 'a';
   const product = 'r';
   const category = 'cat';
@@ -253,10 +253,17 @@ let objJsonStr = JSON.stringify(obj);
          const finalUrl = process.env.REACT_APP_WALLET_URL + '?code=' + objJsonB64;
 
 
-
+      const openPaymentLink = () => {
+        const w = window.open('', '_blank', "height=950,width=560");
+        w.document.write("<html><head></head><body>Please wait while we load your wallet</body></html>");
+        w.location = finalUrl;
+      
+      }
 
 
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    
 
     const stateDataFn = tx => {
       if (txIsEnquired(tx)) {
@@ -445,9 +452,9 @@ let objJsonStr = JSON.stringify(obj);
                 <br/>
                 <div className={css.paymentlinkWrapper}>
 
-                 <span>If you didn't pay yet click <a href={finalUrl} target="_blank">here</a> or scan the QR code below</span>
+                 <span>If you didn't pay yet click <span onClick={openPaymentLink} className={css.paymentLink}>here</span> or scan the QR code below</span>
                   <br/>
-                  <QRCode value={finalUrl} />
+                  <QRCode value={finalUrl} level="L"/>
                 </div>
 
 
