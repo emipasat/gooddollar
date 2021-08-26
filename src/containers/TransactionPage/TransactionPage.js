@@ -41,7 +41,6 @@ import css from './TransactionPage.module.css';
 
 const PROVIDER = 'provider';
 const CUSTOMER = 'customer';
-
 // TransactionPage handles data loading for Sale and Order views to transaction pages in Inbox.
 export const TransactionPageComponent = props => {
   const {
@@ -92,6 +91,7 @@ export const TransactionPageComponent = props => {
   const currentListing = ensureListing(currentTransaction.listing);
   const isProviderRole = transactionRole === PROVIDER;
   const isCustomerRole = transactionRole === CUSTOMER;
+
 
   const redirectToCheckoutPageWithInitialValues = (initialValues, listing) => {
     const routes = routeConfiguration();
