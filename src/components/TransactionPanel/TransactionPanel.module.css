@@ -480,3 +480,13 @@
   margin-top: 0;
   margin-bottom: 1px;
 }
+
+
+.paymentlinkWrapper{ 
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (max-width: 900px){
+    padding: 0 2pc;
+  }
+}
