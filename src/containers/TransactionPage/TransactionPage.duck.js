@@ -807,7 +807,6 @@ const poll = (id, txRole) => async (dispatch, getState, sdk) => {
   for (var j=0; j< 100; j++)
   {
     await sleep(2500);
-    console.log(j+ ' xxx');
     sdk.transactions
       .show(
         {

@@ -53,7 +53,7 @@ import PanelHeading, {
 } from './PanelHeading';
 
 import css from './TransactionPanel.module.css';
-
+const QRCode = require('qrcode.react');
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
@@ -81,6 +81,7 @@ const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
     otherUserDisplayNameString,
   };
 };
+const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
 
 export class TransactionPanelComponent extends Component {
   constructor(props) {
@@ -197,7 +198,7 @@ export class TransactionPanelComponent extends Component {
       onFetchTransactionLineItems,
       lineItems,
       fetchLineItemsInProgress,
-      fetchLineItemsError,
+      fetchLineItemsError
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -215,6 +216,47 @@ export class TransactionPanelComponent extends Component {
     const isProviderLoaded = !!currentProvider.id;
     const isProviderBanned = isProviderLoaded && currentProvider.attributes.banned;
     const isProviderDeleted = isProviderLoaded && currentProvider.attributes.deleted;
+
+
+    // QR code %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+        const account = 'm';
+  const amount = 'a';
+  const product = 'r';
+  const category = 'cat';
+  const ven = 'ven';
+  const cbu = 'cbu';
+  const web = 'web';
+  const ind = 'ind';
+
+  const venObj = {
+    //[cbu]: canonicalRootURL + '/order/' + values.orderId.uuid + '/details',
+    [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + currentTransaction.uuid,
+    [web]: canonicalRootURL,
+    [ven]: 'Good Dollar Marketplace',
+    [ind]: 'used_for_what'
+  };
+
+
+  const obj = {
+    [account]: currentListing.author.attributes.profile.publicData.goodDollarAccount,
+    [amount]: currentListing.attributes.price.amount,
+    [product]: currentListing.attributes.title,
+    [category]: 'Other',
+    [ven]: venObj
+};
+
+let objJsonStr = JSON.stringify(obj);
+          let objJsonB64 = Buffer.from(objJsonStr).toString("base64");  
+
+         const finalUrl = process.env.REACT_APP_WALLET_URL + '?code=' + objJsonB64;
+
+
+
+
+
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     const stateDataFn = tx => {
       if (txIsEnquired(tx)) {
@@ -380,7 +422,7 @@ export class TransactionPanelComponent extends Component {
               listingTitle={listingTitle}
               listingDeleted={listingDeleted}
             />
-
+      {/* <p>{finalUrl}</p> */}
             <div className={css.bookingDetailsMobile}>
               <AddressLinkMaybe
                 rootClassName={css.addressMobile}
@@ -399,6 +441,20 @@ export class TransactionPanelComponent extends Component {
                 />
               </p>
             ) : null}
+
+                <br/>
+                <div className={css.paymentlinkWrapper}>
+
+                 <span>If you didn't pay yet click <a href={finalUrl} target="_blank">here</a> or scan the QR code below</span>
+                  <br/>
+                  <QRCode value={finalUrl} />
+                </div>
+
+
+
+
+
+
             <FeedSection
               rootClassName={css.feedContainer}
               currentTransaction={currentTransaction}
