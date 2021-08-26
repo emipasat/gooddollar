@@ -490,3 +490,14 @@
     padding: 0 2pc;
   }
 }
+
+
+.paymentLink{
+  color: var(--marketplaceColor);
+  cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+    font-size: 1.03pc;
+
+  }
+}
