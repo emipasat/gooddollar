@@ -90,6 +90,7 @@ export class TransactionPanelComponent extends Component {
       sendMessageFormFocused: false,
       isReviewModalOpen: false,
       reviewSubmitted: false,
+      window: false
     };
     this.isMobSaf = false;
     this.sendMessageFormName = 'TransactionPanel.SendMessageForm';
@@ -256,7 +257,25 @@ let objJsonStr = JSON.stringify(obj);
       const openPaymentLink = () => {
         const w = window.open('', '_blank', "height=950,width=560");
         w.document.write("<html><head></head><body>Please wait while we load your wallet</body></html>");
-        w.location = finalUrl;
+        w.document.close();
+
+
+        setTimeout(()=> {
+          if (finalUrl)
+          {
+            w.location = finalUrl;
+            this.setState({ window: w });
+          }
+        }, 1500);
+    
+    
+        window.onbeforeunload = (event) => {
+    
+          if (this.state.window)
+          {
+            this.state.window.close();
+          }
+        };
       
       }
 
