@@ -1121,7 +1121,8 @@
   "EditListingAvailabilityPlanForm.timezonePickerTitle": "Time zone",
   "EditListingAvailabilityPlanForm.title": "Edit default schedule for {listingTitle}",
   "EditListingAvailabilityPlanForm.updateFailed": "Failed to update. Please try again.",
-  "TopbarDesktop.yourListingsLink": "Your listings"
+  "TopbarDesktop.yourListingsLink": "Your listings",
+  "EditListingDescriptionForm.typeRequired": "You need to select a type"
 
 
 }
