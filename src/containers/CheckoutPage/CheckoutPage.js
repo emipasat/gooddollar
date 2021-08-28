@@ -230,7 +230,8 @@ export class CheckoutPageComponent extends Component {
       listingId: this.state.pageData.listing.id,
       bookingStart: this.state.pageData.bookingDates.bookingStart,// speculatedTransaction.booking.attributes.start,
       bookingEnd: this.state.pageData.bookingDates.bookingEnd, //speculatedTransaction.booking.attributes.end,
-      quantity: this.state.pageData.bookingData.quantity
+      quantity: this.state.pageData.bookingData.quantity,
+      test: "test"
     };
 
     const enquiredTransaction = this.state.pageData.enquiredTransaction;

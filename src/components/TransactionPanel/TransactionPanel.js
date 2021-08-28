@@ -32,6 +32,8 @@ import {
 import { SendMessageForm } from '../../forms';
 import config from '../../config';
 
+import { SecondaryButton } from '../../components';
+
 // These are internal components that make this file more readable.
 import AddressLinkMaybe from './AddressLinkMaybe';
 import BreakdownMaybe from './BreakdownMaybe';
@@ -51,7 +53,7 @@ import PanelHeading, {
 } from './PanelHeading';
 
 import css from './TransactionPanel.module.css';
-
+const QRCode = require('qrcode.react');
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
@@ -79,6 +81,7 @@ const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
     otherUserDisplayNameString,
   };
 };
+const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
 
 export class TransactionPanelComponent extends Component {
   constructor(props) {
@@ -184,6 +187,7 @@ export class TransactionPanelComponent extends Component {
       intl,
       onAcceptSale,
       onDeclineSale,
+      onCompleteSale,
       acceptInProgress,
       declineInProgress,
       acceptSaleError,
@@ -194,7 +198,7 @@ export class TransactionPanelComponent extends Component {
       onFetchTransactionLineItems,
       lineItems,
       fetchLineItemsInProgress,
-      fetchLineItemsError,
+      fetchLineItemsError
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -212,6 +216,73 @@ export class TransactionPanelComponent extends Component {
     const isProviderLoaded = !!currentProvider.id;
     const isProviderBanned = isProviderLoaded && currentProvider.attributes.banned;
     const isProviderDeleted = isProviderLoaded && currentProvider.attributes.deleted;
+
+
+    // QR code %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+  const account = 'm';
+  const amount = 'a';
+  const product = 'r';
+  const category = 'cat';
+  const ven = 'ven';
+  const cbu = 'cbu';
+  const web = 'web';
+  const ind = 'ind';
+
+  const venObj = {
+    //[cbu]: canonicalRootURL + '/order/' + values.orderId.uuid + '/details',
+    [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + currentTransaction.id.uuid,
+    [web]: canonicalRootURL,
+    [ven]: 'Good Dollar Marketplace',
+    [ind]: 'used_for_what'
+  };
+
+
+  const obj = {
+    [account]: currentListing.author.attributes.profile.publicData.goodDollarAccount,
+    [amount]: currentListing.attributes.price.amount,
+    [product]: currentListing.attributes.title,
+    [category]: 'Other',
+    [ven]: venObj
+};
+
+let objJsonStr = JSON.stringify(obj);
+          let objJsonB64 = Buffer.from(objJsonStr).toString("base64");  
+
+         const finalUrl = process.env.REACT_APP_WALLET_URL + '?code=' + objJsonB64;
+
+
+      const openPaymentLink = () => {
+        const w = window.open('', '_blank', "height=950,width=560");
+        w.document.write("<html><head></head><body>Please wait while we load your wallet</body></html>");
+        w.document.close();
+
+        let windowObj = false;
+
+        setTimeout(()=> {
+          if (finalUrl)
+          {
+            w.location = finalUrl;
+            windowObj = w
+          }
+        }, 1500);
+    
+    
+        window.onbeforeunload = (event) => {
+    
+          if (windowObj)
+          {
+            windowObj.close();
+          }
+        };
+      
+      }
+
+
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    
 
     const stateDataFn = tx => {
       if (txIsEnquired(tx)) {
@@ -305,6 +376,16 @@ export class TransactionPanelComponent extends Component {
     const firstImage =
       currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
+
+    let isButtonDisabled = true;
+
+    console.log(currentTransaction);
+
+    if (currentTransaction.attributes.lastTransition === 'transition/accept'){
+        isButtonDisabled = false;
+    }
+  
+
     const saleButtons = (
       <SaleActionButtonsMaybe
         showButtons={stateData.showSaleButtons}
@@ -367,7 +448,7 @@ export class TransactionPanelComponent extends Component {
               listingTitle={listingTitle}
               listingDeleted={listingDeleted}
             />
-
+      {/* <p>{finalUrl}</p> */}
             <div className={css.bookingDetailsMobile}>
               <AddressLinkMaybe
                 rootClassName={css.addressMobile}
@@ -386,6 +467,20 @@ export class TransactionPanelComponent extends Component {
                 />
               </p>
             ) : null}
+
+                <br/>
+                <div className={css.paymentlinkWrapper}>
+
+                 <span>If you didn't pay yet click <span onClick={openPaymentLink} className={css.paymentLink}>here</span> or scan the QR code below</span>
+                  <br/>
+                  <QRCode value={finalUrl} level="L"/>
+                </div>
+
+
+
+
+
+
             <FeedSection
               rootClassName={css.feedContainer}
               currentTransaction={currentTransaction}
@@ -399,6 +494,21 @@ export class TransactionPanelComponent extends Component {
               onShowMoreMessages={() => onShowMoreMessages(currentTransaction.id)}
               totalMessagePages={totalMessagePages}
             />
+
+
+            {!isProvider && currentTransaction.attributes.lastTransition == "transition/accept" ? (
+              <div className={css.submitContainer} style={{ margin: 30 }}>
+                <SecondaryButton
+                  
+                    rootClassName={isButtonDisabled ? css.cancelButtonDisabled : css.cancelButton}
+                    onClick={() => onCompleteSale(currentTransaction.id)} 
+                  >
+                    
+                    Complete sale
+                  </SecondaryButton>
+              </div>)
+            :null}
+
             {showSendMessageForm ? (
               <SendMessageForm
                 formId={this.sendMessageFormName}
@@ -532,6 +642,7 @@ TransactionPanelComponent.propTypes = {
   // Sale related props
   onAcceptSale: func.isRequired,
   onDeclineSale: func.isRequired,
+  onCompleteSale: func.isRequired,
   acceptInProgress: bool.isRequired,
   declineInProgress: bool.isRequired,
   acceptSaleError: propTypes.error,

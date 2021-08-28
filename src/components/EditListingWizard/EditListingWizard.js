@@ -436,7 +436,13 @@ class EditListingWizard extends Component {
             ) : (
               <>
                 <p className={css.modalMessage}>
-                  <FormattedMessage id="EditListingWizard.payoutModalInfo" />
+                  <p>Almost there! Time to connect your G$ wallet to the marketplace</p>
+                  <ul>
+                    <li>1. Go to your Gooddollar wallet</li>
+                    <li>2. Select "Export wallet" from the menu</li>
+                    <li>3. Copy address under "My Wallet Address"</li>
+                    <li>4. Paste address here</li>
+                  </ul>
                 </p>
                 <GoodDollarAccountForm
                     className={css.form}
