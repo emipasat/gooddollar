@@ -232,7 +232,7 @@ export class TransactionPanelComponent extends Component {
 
   const venObj = {
     //[cbu]: canonicalRootURL + '/order/' + values.orderId.uuid + '/details',
-    [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + currentTransaction.uuid,
+    [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + currentTransaction.id.uuid,
     [web]: canonicalRootURL,
     [ven]: 'Good Dollar Marketplace',
     [ind]: 'used_for_what'
