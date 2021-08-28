@@ -43,6 +43,10 @@ export const TRANSITION_CANCEL = 'transition/cancel';
 // The backend will mark the transaction completed.
 export const TRANSITION_COMPLETE = 'transition/complete';
 
+// Customer can also complete the transition.
+export const TRANSITION_COMPLETE_BY_CUSTOMER = 'transition/complete-by-customer';
+
+
 // Reviews are given through transaction transitions. Review 1 can be
 // by provider or customer, and review 2 will be the other party of
 // the transaction.
@@ -149,6 +153,7 @@ const stateDescription = {
       on: {
         [TRANSITION_CANCEL]: STATE_CANCELED,
         [TRANSITION_COMPLETE]: STATE_DELIVERED,
+        [TRANSITION_COMPLETE_BY_CUSTOMER]: STATE_DELIVERED,
       },
     },
 
@@ -302,6 +307,7 @@ export const isRelevantPastTransition = transition => {
     TRANSITION_ACCEPT,
     TRANSITION_CANCEL,
     TRANSITION_COMPLETE,
+    TRANSITION_COMPLETE_BY_CUSTOMER,
     TRANSITION_CONFIRM_PAYMENT,
     TRANSITION_DECLINE,
     TRANSITION_EXPIRE,

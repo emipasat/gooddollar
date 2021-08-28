@@ -11,6 +11,7 @@ import {
   txIsInFirstReviewBy,
   TRANSITION_ACCEPT,
   TRANSITION_DECLINE,
+  TRANSITION_COMPLETE_BY_CUSTOMER
 } from '../../util/transaction';
 import { transactionLineItems } from '../../util/api';
 import * as log from '../../util/log';
@@ -22,6 +23,7 @@ import {
 import { findNextBoundary, nextMonthFn, monthIdStringInTimeZone } from '../../util/dates';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { fetchCurrentUserNotifications } from '../../ducks/user.duck';
+import { completePrivileged } from '../../util/api';
 
 const { UUID } = sdkTypes;
 
@@ -43,6 +45,10 @@ export const FETCH_TRANSITIONS_ERROR = 'app/TransactionPage/FETCH_TRANSITIONS_ER
 export const ACCEPT_SALE_REQUEST = 'app/TransactionPage/ACCEPT_SALE_REQUEST';
 export const ACCEPT_SALE_SUCCESS = 'app/TransactionPage/ACCEPT_SALE_SUCCESS';
 export const ACCEPT_SALE_ERROR = 'app/TransactionPage/ACCEPT_SALE_ERROR';
+
+export const COMPLETE_SALE_REQUEST = 'app/TransactionPage/COMPLETE_SALE_REQUEST';
+export const COMPLETE_SALE_SUCCESS = 'app/TransactionPage/COMPLETE_SALE_SUCCESS';
+export const COMPLETE_SALE_ERROR = 'app/TransactionPage/COMPLETE_SALE_ERROR';
 
 export const DECLINE_SALE_REQUEST = 'app/TransactionPage/DECLINE_SALE_REQUEST';
 export const DECLINE_SALE_SUCCESS = 'app/TransactionPage/DECLINE_SALE_SUCCESS';
@@ -245,6 +251,11 @@ export const acceptOrDeclineInProgress = state => {
 };
 
 // ================ Action creators ================ //
+
+export const completeInProgress = state => {
+  return state.TransactionPage.completeInProgress;
+};
+
 export const setInitialValues = initialValues => ({
   type: SET_INITIAL_VALUES,
   payload: pick(initialValues, Object.keys(initialState)),
@@ -267,6 +278,10 @@ const fetchTransitionsError = e => ({ type: FETCH_TRANSITIONS_ERROR, error: true
 const acceptSaleRequest = () => ({ type: ACCEPT_SALE_REQUEST });
 const acceptSaleSuccess = () => ({ type: ACCEPT_SALE_SUCCESS });
 const acceptSaleError = e => ({ type: ACCEPT_SALE_ERROR, error: true, payload: e });
+
+const completeSaleRequest = () => ({ type: COMPLETE_SALE_REQUEST });
+const completeSaleSuccess = () => ({ type: COMPLETE_SALE_SUCCESS });
+const completeSaleError = e => ({ type: COMPLETE_SALE_ERROR, error: true, payload: e });
 
 const declineSaleRequest = () => ({ type: DECLINE_SALE_REQUEST });
 const declineSaleSuccess = () => ({ type: DECLINE_SALE_SUCCESS });
@@ -484,6 +499,32 @@ export const declineSale = id => (dispatch, getState, sdk) => {
       throw e;
     });
 };
+
+export const completeSale = id => (dispatch, getState, sdk) => {
+  if (completeInProgress(getState())) {
+    return Promise.reject(new Error('Complete already in progress'));
+  }
+  dispatch(completeSaleRequest());
+
+  return sdk.transactions
+    .transition({ id, transition: TRANSITION_COMPLETE_BY_CUSTOMER, params: {} }, { expand: true })
+    .then(response => {
+      dispatch(addMarketplaceEntities(response));
+      dispatch(completeSaleSuccess());
+      dispatch(fetchCurrentUserNotifications());
+      return response;
+    })
+    .catch(e => {
+      dispatch(completeSaleError(storableError(e)));
+      log.error(e, 'complete-sale-failed', {
+        txId: id,
+        transition: TRANSITION_COMPLETE_BY_CUSTOMER,
+      });
+      throw e;
+    });
+};
+
+
 
 const fetchMessages = (txId, page) => (dispatch, getState, sdk) => {
   const paging = { page, per_page: MESSAGES_PAGE_SIZE };
@@ -766,7 +807,6 @@ const poll = (id, txRole) => async (dispatch, getState, sdk) => {
   for (var j=0; j< 100; j++)
   {
     await sleep(2500);
-    console.log(j+ ' xxx');
     sdk.transactions
       .show(
         {
