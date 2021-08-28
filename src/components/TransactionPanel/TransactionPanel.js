@@ -198,7 +198,8 @@ export class TransactionPanelComponent extends Component {
       onFetchTransactionLineItems,
       lineItems,
       fetchLineItemsInProgress,
-      fetchLineItemsError
+      fetchLineItemsError,
+      isAccepted
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -469,13 +470,15 @@ let objJsonStr = JSON.stringify(obj);
             ) : null}
 
                 <br/>
+
+                {isAccepted ? null : 
                 <div className={css.paymentlinkWrapper}>
 
                  <span>If you didn't pay yet click <span onClick={openPaymentLink} className={css.paymentLink}>here</span> or scan the QR code below</span>
                   <br/>
                   <QRCode value={finalUrl} level="L"/>
                 </div>
-
+                      }
 
 
 
