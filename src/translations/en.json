@@ -94,6 +94,7 @@
   "BookingPanel.selleredBy": "Hosted by {name}",
   "BookingPanel.perDay": "per day",
   "BookingPanel.perNight": "per night",
+  "BookingPanel.perHour": "per hour",
   "BookingPanel.perUnit": "per unit",
   "BookingPanel.subTitleClosedListing": "Sorry, this product is not active anymore.",
   "BookingTimeForm.bookingEndTitle": "End date",

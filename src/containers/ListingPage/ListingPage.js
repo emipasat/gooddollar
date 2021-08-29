@@ -105,16 +105,16 @@ export class ListingPageComponent extends Component {
     } = this.props;
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
-
+    const type = listing.attributes.publicData.type;
     const { bookingStartTime, bookingEndTime, ...restOfValues } = values;
-    //const bookingStart = timestampToDate(bookingStartTime);
-    //const bookingEnd = timestampToDate(bookingEndTime);
+    const bookingStart = type === 'bookable' ? timestampToDate(bookingStartTime) : moment().add(1, 'days').toDate();
+    const bookingEnd = type === 'bookable' ? timestampToDate(bookingEndTime) : moment().add(2, 'days').toDate();
 
-    const bookingStart = moment().add(1, 'days').toDate();
-    const bookingEnd = moment().add(2, 'days').toDate();
+    // const bookingStart = moment().add(1, 'days').toDate();
+    // const bookingEnd = moment().add(2, 'days').toDate();
 
     const bookingData = {
-      quantity: 1, //calculateQuantityFromHours(bookingStart, bookingEnd),
+      quantity: type === 'bookable' ? calculateQuantityFromHours(bookingStart, bookingEnd) : 1, //calculateQuantityFromHours(bookingStart, bookingEnd),
       ...restOfValues,
     };
 
