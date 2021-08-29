@@ -75,9 +75,10 @@ const BookingPanel = props => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
-    noAccountAddedMessage
+    noAccountAddedMessage,
+    type
   } = props;
-
+  const listingType = listing.attributes.publicData.type;
   const price = listing.attributes.price ? listing.attributes.price : new Money(listing.attributes.publicData.priceInG, 'USD');
   const timeZone =
     listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
@@ -97,7 +98,9 @@ const BookingPanel = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = isNightly
+  const unitTranslationKey = listingType === 'bookable' ? 
+      'BookingPanel.perHour' :
+       isNightly
     ? 'BookingPanel.perNight'
     : isDaily
     ? 'BookingPanel.perDay'
@@ -154,6 +157,7 @@ const BookingPanel = props => {
             lineItems={lineItems}
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
+            type={type}
           />
         ) : null}
       </ModalInMobile>

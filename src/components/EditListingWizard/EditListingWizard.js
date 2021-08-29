@@ -38,7 +38,16 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // and listing publishing happens after last panel.
 // Note 3: in FTW-hourly template we don't use the POLICY tab so it's commented out.
 // If you want to add a free text field to your listings you can enable the POLICY tab
-export const TABS = [
+export const TABS_PRODUCT = [
+  DESCRIPTION,
+  FEATURES,
+  //POLICY,
+  LOCATION,
+  PRICING,
+  PHOTOS,
+];
+
+export const TABS_BOOKING = [
   DESCRIPTION,
   FEATURES,
   //POLICY,
@@ -47,6 +56,8 @@ export const TABS = [
   ...availabilityMaybe,
   PHOTOS,
 ];
+
+
 
 // Tabs are horizontal in small screens
 const MAX_HORIZONTAL_NAV_SCREEN_WIDTH = 1023;
@@ -124,6 +135,8 @@ const tabCompleted = (tab, listing) => {
  * @return object containing activity / editability of different tabs of this wizard
  */
 const tabsActive = (isNew, listing) => {
+  const type = listing.attributes.publicData.type;
+  const TABS = type === "bookable" ? TABS_BOOKING : TABS_PRODUCT;
   return TABS.reduce((acc, tab) => {
     const previousTabIndex = TABS.findIndex(t => t === tab) - 1;
     const isActive =
@@ -295,6 +308,8 @@ class EditListingWizard extends Component {
     const classes = classNames(rootClasses, className);
     const currentListing = ensureListing(listing);
     const tabsStatus = tabsActive(isNewListingFlow, currentListing);
+    const type = currentListing.attributes.publicData.type;
+    const TABS = type === "bookable" ? TABS_BOOKING : TABS_PRODUCT;
 
     // If selectedTab is not active, redirect to the beginning of wizard
     if (!tabsStatus[selectedTab]) {
@@ -509,7 +524,7 @@ EditListingWizard.propTypes = {
     id: string.isRequired,
     slug: string.isRequired,
     type: oneOf(LISTING_PAGE_PARAM_TYPES).isRequired,
-    tab: oneOf(TABS).isRequired,
+    tab: oneOf(TABS_BOOKING).isRequired,
   }).isRequired,
   stripeAccount: object,
   stripeAccountFetched: bool,
