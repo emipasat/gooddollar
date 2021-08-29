@@ -53,7 +53,7 @@ import PanelHeading, {
 } from './PanelHeading';
 
 import css from './TransactionPanel.module.css';
-const QRCode = require('qrcode.react');
+import QRCode from 'qrcode.react';
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
@@ -230,13 +230,15 @@ export class TransactionPanelComponent extends Component {
   const cbu = 'cbu';
   const web = 'web';
   const ind = 'ind';
+  const uuid = 'uuid';
 
   const venObj = {
     //[cbu]: canonicalRootURL + '/order/' + values.orderId.uuid + '/details',
     [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + currentTransaction.id.uuid,
     [web]: canonicalRootURL,
-    [ven]: 'Good Dollar Marketplace',
-    [ind]: 'used_for_what'
+    [ven]: 'Good Dollar',
+    [ind]: 'used_for_what',
+    [uuid]: currentTransaction.id.uuid
   };
 
 
@@ -244,7 +246,7 @@ export class TransactionPanelComponent extends Component {
     [account]: currentListing.author.attributes.profile.publicData.goodDollarAccount,
     [amount]: currentListing.attributes.price.amount,
     [product]: currentListing.attributes.title,
-    [category]: 'Other',
+    [category]: currentListing.attributes.publicData.category,
     [ven]: venObj
 };
 
