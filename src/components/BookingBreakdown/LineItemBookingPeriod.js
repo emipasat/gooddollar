@@ -70,8 +70,7 @@ const LineItemBookingPeriod = props => {
 
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isUnit = unitType === LINE_ITEM_UNITS;
-  const endDay =
-    isUnit || isNightly ? localEndDateRaw : moment(localEndDateRaw).subtract(1, 'days');
+  const endDay = localEndDateRaw // isUnit || isNightly ? localEndDateRaw : moment(localEndDateRaw).subtract(1, 'days');
 
   return (
     <>
@@ -83,7 +82,7 @@ const LineItemBookingPeriod = props => {
           timeZone={timeZone}
         />
       </div>
-      <hr className={css.totalDivider} />
+      {/* <hr className={css.totalDivider} /> */}
     </>
   );
 };

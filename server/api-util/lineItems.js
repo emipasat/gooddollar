@@ -30,7 +30,7 @@ const PROVIDER_COMMISSION_PERCENTAGE = -10;
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
   const { startDate, endDate, quantity } = bookingData;
-
+  const type = listing.attributes.publicData.type;
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
    * you should use code line-item/units
@@ -43,7 +43,7 @@ exports.transactionLineItems = (listing, bookingData) => {
   const booking = {
     code: bookingUnitType,
     unitPrice,
-    quantity: quantity, //calculateQuantityFromHours(startDate, endDate),
+    quantity: type === 'bookable' ? calculateQuantityFromHours(startDate, endDate) : quantity, //calculateQuantityFromHours(startDate, endDate),
     includeFor: ['customer', 'provider'],
   };
 
