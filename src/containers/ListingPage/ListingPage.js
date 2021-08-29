@@ -93,6 +93,8 @@ export class ListingPageComponent extends Component {
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
   }
 
+  
+
   handleSubmit(values) {
     const {
       history,
@@ -211,6 +213,8 @@ export class ListingPageComponent extends Component {
       fetchLineItemsError,
     } = this.props;
 
+
+
     const listingId = new UUID(rawParams.id);
     const isPendingApprovalVariant = rawParams.variant === LISTING_PAGE_PENDING_APPROVAL_VARIANT;
     const isDraftVariant = rawParams.variant === LISTING_PAGE_DRAFT_VARIANT;
@@ -218,6 +222,8 @@ export class ListingPageComponent extends Component {
       isPendingApprovalVariant || isDraftVariant
         ? ensureOwnListing(getOwnListing(listingId))
         : ensureListing(getListing(listingId));
+
+    const type = currentListing.attributes.publicData.type;
 
     const listingSlug = rawParams.slug || createSlug(currentListing.attributes.title || '');
     const params = { slug: listingSlug, ...rawParams };
@@ -480,7 +486,7 @@ export class ListingPageComponent extends Component {
                   lineItems={lineItems}
                   fetchLineItemsInProgress={fetchLineItemsInProgress}
                   fetchLineItemsError={fetchLineItemsError}
-
+                  type={type}
                   noAccountAddedMessage={noAccountAddedMessage}
                 />
               </div>

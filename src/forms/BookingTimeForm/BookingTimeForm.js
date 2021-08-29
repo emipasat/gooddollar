@@ -97,6 +97,7 @@ export class BookingTimeFormComponent extends Component {
             lineItems,
             fetchLineItemsInProgress,
             fetchLineItemsError,
+            type
           } = fieldRenderProps;
 
           const startTime = values && values.bookingStartTime ? values.bookingStartTime : null;
