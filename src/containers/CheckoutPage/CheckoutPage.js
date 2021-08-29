@@ -231,7 +231,6 @@ export class CheckoutPageComponent extends Component {
       bookingStart: this.state.pageData.bookingDates.bookingStart,// speculatedTransaction.booking.attributes.start,
       bookingEnd: this.state.pageData.bookingDates.bookingEnd, //speculatedTransaction.booking.attributes.end,
       quantity: this.state.pageData.bookingData.quantity,
-      test: "test"
     };
 
     const enquiredTransaction = this.state.pageData.enquiredTransaction;
@@ -256,20 +255,22 @@ export class CheckoutPageComponent extends Component {
           const cbu = 'cbu';
           const web = 'web';
           const ind = 'ind';
+          const uuid = 'uuid';
 
           const venObj = {
             //[cbu]: canonicalRootURL + '/order/' + values.orderId.uuid + '/details',
             [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + values.orderId.uuid,
             [web]: canonicalRootURL,
-            [ven]: 'Good Dollar Marketplace',
-            [ind]: 'used_for_what'
+            [ven]: 'Good Dollar',
+            [ind]: 'used_for_what',
+            [uuid]: values.orderId.uuid
           };
 
           const obj = {
               [account]: this.state.pageData.listing.author.attributes.profile.publicData.goodDollarAccount,
               [amount]: this.state.pageData.listing.attributes.price.amount,
               [product]: this.state.pageData.listing.attributes.title,
-              [category]: 'Other',
+              [category]: this.state.pageData.listing.attributes.publicData.category,
               [ven]: venObj
           };
           console.log(obj);
@@ -620,7 +621,7 @@ export class CheckoutPageComponent extends Component {
     const venObj = {
       [cbu]: 'http://localhost:3000/inbox/orders',
       [web]: 'http://localhost:3000',
-      [ven]: 'Good Dollar Marketplace',
+      [ven]: 'Good Dollar',
       [ind]: 'used_for_what'
     };
 
