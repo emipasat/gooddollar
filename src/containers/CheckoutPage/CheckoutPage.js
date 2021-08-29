@@ -268,7 +268,7 @@ export class CheckoutPageComponent extends Component {
 
           const obj = {
               [account]: this.state.pageData.listing.author.attributes.profile.publicData.goodDollarAccount,
-              [amount]: this.state.pageData.listing.attributes.price.amount,
+              [amount]: this.state.pageData.listing.attributes.price.amount * this.state.pageData.bookingData.quantity,
               [product]: this.state.pageData.listing.attributes.title,
               [category]: this.state.pageData.listing.attributes.publicData.category,
               [ven]: venObj
@@ -354,6 +354,10 @@ export class CheckoutPageComponent extends Component {
     const currentBooking = ensureBooking(currentTransaction.booking);
     const currentListing = ensureListing(listing);
     const currentAuthor = ensureUser(currentListing.author);
+
+    const type = currentListing.attributes.publicData.type;
+    const quantity = this.state.pageData.bookingData ? this.state.pageData.bookingData.quantity : 1;
+    const listingPrice = currentListing.attributes.price.amount / 100;
 
     const isOwnListing =
       currentUser &&
@@ -693,6 +697,28 @@ export class CheckoutPageComponent extends Component {
             </div>
             <div className={css.detailsHeadings}>
               <h2 className={css.detailsTitle}>{listingTitle}</h2>
+            </div>
+
+            <div className={css.breakdownWrapper}>
+                {type === 'bookable' ?
+
+                  <>
+                      <div className={css.lineItemHours}>
+                             <p className={css.lineItemInfo}>{`G$${listingPrice}.00 * ${quantity} ${quantity > 1 ? "hours" : "hour"}`}</p>
+                             <p className={css.lineItemInfo}>{`G$${listingPrice * quantity}.00`}</p>
+                      </div>
+                      <div className={css.lineItemTotal}>
+                              <p className={css.lineItemInfo}>{`Total price`}</p>
+                              <p className={css.lineItemInfo}><strong>{`G$${listingPrice * quantity}.00`}</strong></p>
+                      </div>
+                  </>
+                
+              : <>
+                      <div className={css.lineItemTotal}>
+                              <p className={css.lineItemInfo}>{`Total price`}</p>
+                              <p className={css.lineItemInfo}><strong>{`G$${listingPrice * quantity}.00`}</strong></p>
+                      </div>
+                </>}
             </div>
 
             {speculateTransactionErrorMessage}
