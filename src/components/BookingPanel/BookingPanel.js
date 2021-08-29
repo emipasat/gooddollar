@@ -75,7 +75,8 @@ const BookingPanel = props => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
-    noAccountAddedMessage
+    noAccountAddedMessage,
+    type
   } = props;
 
   const price = listing.attributes.price ? listing.attributes.price : new Money(listing.attributes.publicData.priceInG, 'USD');
@@ -154,6 +155,7 @@ const BookingPanel = props => {
             lineItems={lineItems}
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
+            type={type}
           />
         ) : null}
       </ModalInMobile>
