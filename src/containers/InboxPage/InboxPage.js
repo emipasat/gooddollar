@@ -398,7 +398,7 @@ export const InboxPageComponent = props => {
           <h1 className={css.title}>
             <FormattedMessage id="InboxPage.title" />
           </h1>
-          {currentUserListing ? nav : <div className={css.navPlaceholder} />}
+          {nav}
         </LayoutWrapperSideNav>
         <LayoutWrapperMain>
           {error}
