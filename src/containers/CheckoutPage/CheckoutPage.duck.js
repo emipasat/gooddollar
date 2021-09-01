@@ -172,21 +172,35 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
     : TRANSITION_REQUEST_PAYMENT;
   const isPrivilegedTransition = isPrivileged(transition);
 
-  const bookingData = {
+  const bookingData = orderParams.quantity ? {
     startDate: orderParams.bookingStart,
     endDate: orderParams.bookingEnd,
+    quantity: orderParams.quantity
+  } : {
+    startDate: orderParams.bookingStart,
+    endDate: orderParams.bookingEnd
   };
 
   const bodyParams = isTransition
     ? {
         id: transactionId,
         transition,
-        params: orderParams,
+        params: { 
+          ...orderParams,
+          metadata: { 
+            quantity: orderParams.quantity,
+          }
+        }
       }
     : {
         processAlias: config.bookingProcessAlias,
         transition,
-        params: orderParams,
+        params:  { 
+          ...orderParams,
+          metadata: { 
+            quantity: orderParams.quantity,
+          }
+        }
       };
   const queryParams = {
     include: ['booking', 'provider'],
