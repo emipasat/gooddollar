@@ -208,6 +208,7 @@ export class TransactionPanelComponent extends Component {
     const currentCustomer = ensureUser(currentTransaction.customer);
     const isCustomer = transactionRole === 'customer';
     const isProvider = transactionRole === 'provider';
+    const quantity = currentTransaction.attributes.metadata.quantity ? currentTransaction.attributes.metadata.quantity : 1;
 
     const listingLoaded = !!currentListing.id;
     const listingDeleted = listingLoaded && currentListing.attributes.deleted;
@@ -244,7 +245,7 @@ export class TransactionPanelComponent extends Component {
 
   const obj = {
     [account]: currentListing.author.attributes.profile.publicData.goodDollarAccount,
-    [amount]: currentListing.attributes.price.amount,
+    [amount]: currentListing.attributes.price.amount * quantity,
     [product]: currentListing.attributes.title,
     [category]: currentListing.attributes.publicData.category,
     [ven]: venObj
@@ -364,6 +365,10 @@ let objJsonStr = JSON.stringify(obj);
     const unitType = config.bookingUnitType;
     const isNightly = unitType === LINE_ITEM_NIGHT;
     const isDaily = unitType === LINE_ITEM_DAY;
+
+
+    const type = currentListing.attributes.publicData.type;
+    const listingPrice = currentListing.attributes.price.amount / 100;
 
     const unitTranslationKey = isNightly
       ? 'TransactionPanel.perNight'
@@ -579,10 +584,35 @@ let objJsonStr = JSON.stringify(obj);
                 transactionRole={transactionRole}
               />
 
+              <div className={css.breakdownWrapper}>
+                        {type === 'bookable' ?
+
+                        <>
+                            <div className={css.lineItemHours}>
+                                  <p className={css.lineItemInfo}>{`G$${listingPrice}.00 * ${quantity} ${quantity > 1 ? "hours" : "hour"}`}</p>
+                                  <p className={css.lineItemInfo}>{`G$${listingPrice * quantity}.00`}</p>
+                            </div>
+                            <div className={css.lineItemTotal}>
+                                    <p className={css.lineItemInfo}>{`Total price`}</p>
+                                    <p className={css.lineItemInfo}><strong>{`G$${listingPrice * quantity}.00`}</strong></p>
+                            </div>
+                        </>
+
+                        : <>
+                            <div className={css.lineItemTotal}>
+                                    <p className={css.lineItemInfo}>{`Total price`}</p>
+                                    <p className={css.lineItemInfo}><strong>{`G$${listingPrice * quantity}.00`}</strong></p>
+                            </div>
+                        </>}
+
+
+
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
               ) : null}
             </div>
+              </div>
+          
           </div>
         </div>
         <ReviewModal
