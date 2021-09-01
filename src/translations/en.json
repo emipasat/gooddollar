@@ -367,7 +367,7 @@
   "InboxPage.fetchFailed": "Could not load all messages. Please try again.",
   "InboxPage.noOrdersFound": "You haven't made any bookings.",
   "InboxPage.noSalesFound": "Nobody has booked anything from you yet.",
-  "InboxPage.ordersTabTitle": "Products",
+  "InboxPage.ordersTabTitle": "Orders",
   "InboxPage.ordersTitle": "Inbox: Products",
   "InboxPage.salesTabTitle": "Selling",
   "InboxPage.salesTitle": "Inbox: Selling",
