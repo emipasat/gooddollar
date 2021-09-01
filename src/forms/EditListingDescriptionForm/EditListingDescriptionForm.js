@@ -85,7 +85,8 @@ const EditListingDescriptionFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
-
+      const isListingPublished = props.listing.attributes.state === "published";
+      
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
@@ -120,11 +121,16 @@ const EditListingDescriptionFormComponent = props => (
             intl={intl}
           /> */}
 
-          <FieldSelect id="type" name="type" label="What type is your product ?" validate={composeValidators(required(typeRequiredMessage))}>
+          {isListingPublished ? 
+          <p className={css.listingType}>Type: {props.listing.attributes.publicData.type === "bookable" ? "bookable" : "quantitively"}</p>
+            : 
+            <FieldSelect id="type" name="type" label="What type is your product ?" validate={composeValidators(required(typeRequiredMessage))}>
             <option value="" disabled hidden>Pick something...</option>
             <option value="bookable">bookable</option>
             <option value="quantity">quantitively</option>
           </FieldSelect>
+        }
+          
 
           <Button
             className={css.submitButton}

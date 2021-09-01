@@ -70,6 +70,7 @@ const EditListingDescriptionPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
+        listing={listing}
         // certificateOptions={certificateOptions}
       />
     </div>
