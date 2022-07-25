@@ -78,19 +78,19 @@ export const filters = [
       step: 5,
     },
   },
-  {
-    id: 'keyword',
-    label: 'Keyword',
-    type: 'KeywordFilter',
-    group: 'primary',
-    // Note: KeywordFilter is fixed filter,
-    // you can't change "queryParamNames: ['keywords'],"
-    queryParamNames: ['keywords'],
-    // NOTE: If you are ordering search results by distance
-    // the keyword search can't be used at the same time.
-    // You can turn on/off ordering by distance from config.js file.
-    config: {},
-  },
+  // {
+  //   id: 'keyword',
+  //   label: 'Keyword',
+  //   type: 'KeywordFilter',
+  //   group: 'primary',
+  //   // Note: KeywordFilter is fixed filter,
+  //   // you can't change "queryParamNames: ['keywords'],"
+  //   queryParamNames: ['keywords'],
+  //   // NOTE: If you are ordering search results by distance
+  //   // the keyword search can't be used at the same time.
+  //   // You can turn on/off ordering by distance from config.js file.
+  //   config: {},
+  // },
   {
     id: 'yogaStyles',
     label: 'Yoga styles',
@@ -197,7 +197,6 @@ export const filters = [
           key: 'professionalServices',
           label: 'Professional services',
         },
-        
       ],
     },
   },
