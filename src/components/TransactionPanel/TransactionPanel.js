@@ -53,7 +53,7 @@ import PanelHeading, {
 } from './PanelHeading';
 
 import css from './TransactionPanel.module.css';
-const QRCode = require('qrcode.react');
+import QRCode from 'qrcode.react';
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
@@ -198,7 +198,8 @@ export class TransactionPanelComponent extends Component {
       onFetchTransactionLineItems,
       lineItems,
       fetchLineItemsInProgress,
-      fetchLineItemsError
+      fetchLineItemsError,
+      isAccepted
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -207,6 +208,7 @@ export class TransactionPanelComponent extends Component {
     const currentCustomer = ensureUser(currentTransaction.customer);
     const isCustomer = transactionRole === 'customer';
     const isProvider = transactionRole === 'provider';
+    const quantity = currentTransaction.attributes.metadata.quantity ? currentTransaction.attributes.metadata.quantity : 1;
 
     const listingLoaded = !!currentListing.id;
     const listingDeleted = listingLoaded && currentListing.attributes.deleted;
@@ -229,21 +231,23 @@ export class TransactionPanelComponent extends Component {
   const cbu = 'cbu';
   const web = 'web';
   const ind = 'ind';
+  const uuid = 'uuid';
 
   const venObj = {
     //[cbu]: canonicalRootURL + '/order/' + values.orderId.uuid + '/details',
     [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + currentTransaction.id.uuid,
     [web]: canonicalRootURL,
-    [ven]: 'Good Dollar Marketplace',
-    [ind]: 'used_for_what'
+    [ven]: 'Good Dollar',
+    [ind]: 'used_for_what',
+    [uuid]: currentTransaction.id.uuid
   };
 
 
   const obj = {
     [account]: currentListing.author.attributes.profile.publicData.goodDollarAccount,
-    [amount]: currentListing.attributes.price.amount,
+    [amount]: currentListing.attributes.price.amount * quantity,
     [product]: currentListing.attributes.title,
-    [category]: 'Other',
+    [category]: currentListing.attributes.publicData.category,
     [ven]: venObj
 };
 
@@ -362,6 +366,10 @@ let objJsonStr = JSON.stringify(obj);
     const isNightly = unitType === LINE_ITEM_NIGHT;
     const isDaily = unitType === LINE_ITEM_DAY;
 
+
+    const type = currentListing.attributes.publicData.type;
+    const listingPrice = currentListing.attributes.price.amount / 100;
+
     const unitTranslationKey = isNightly
       ? 'TransactionPanel.perNight'
       : isDaily
@@ -469,13 +477,15 @@ let objJsonStr = JSON.stringify(obj);
             ) : null}
 
                 <br/>
+
+                {isAccepted ? null : 
                 <div className={css.paymentlinkWrapper}>
 
                  <span>If you didn't pay yet click <span onClick={openPaymentLink} className={css.paymentLink}>here</span> or scan the QR code below</span>
                   <br/>
                   <QRCode value={finalUrl} level="L"/>
                 </div>
-
+                      }
 
 
 
@@ -574,10 +584,35 @@ let objJsonStr = JSON.stringify(obj);
                 transactionRole={transactionRole}
               />
 
+              <div className={css.breakdownWrapper}>
+                        {type === 'bookable' ?
+
+                        <>
+                            <div className={css.lineItemHours}>
+                                  <p className={css.lineItemInfo}>{`G$${listingPrice}.00 * ${quantity} ${quantity > 1 ? "hours" : "hour"}`}</p>
+                                  <p className={css.lineItemInfo}>{`G$${listingPrice * quantity}.00`}</p>
+                            </div>
+                            <div className={css.lineItemTotal}>
+                                    <p className={css.lineItemInfo}>{`Total price`}</p>
+                                    <p className={css.lineItemInfo}><strong>{`G$${listingPrice * quantity}.00`}</strong></p>
+                            </div>
+                        </>
+
+                        : <>
+                            <div className={css.lineItemTotal}>
+                                    <p className={css.lineItemInfo}>{`Total price`}</p>
+                                    <p className={css.lineItemInfo}><strong>{`G$${listingPrice * quantity}.00`}</strong></p>
+                            </div>
+                        </>}
+
+
+
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
               ) : null}
             </div>
+              </div>
+          
           </div>
         </div>
         <ReviewModal

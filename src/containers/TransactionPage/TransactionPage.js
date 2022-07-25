@@ -91,7 +91,7 @@ export const TransactionPageComponent = props => {
   const currentListing = ensureListing(currentTransaction.listing);
   const isProviderRole = transactionRole === PROVIDER;
   const isCustomerRole = transactionRole === CUSTOMER;
-
+  const isAccepted = currentTransaction.attributes.lastTransition === 'transition/accept';
 
   const redirectToCheckoutPageWithInitialValues = (initialValues, listing) => {
     const routes = routeConfiguration();
@@ -263,6 +263,7 @@ export const TransactionPageComponent = props => {
       lineItems={lineItems}
       fetchLineItemsInProgress={fetchLineItemsInProgress}
       fetchLineItemsError={fetchLineItemsError}
+      isAccepted={isAccepted}
     />
   ) : (
     loadingOrFailedFetching

@@ -6,7 +6,7 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput } from '../../components';
+import { Form, Button, FieldTextInput, FieldSelect } from '../../components';
 import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
 
 import css from './EditListingDescriptionForm.module.css';
@@ -57,6 +57,10 @@ const EditListingDescriptionFormComponent = props => (
         id: 'EditListingDescriptionForm.descriptionRequired',
       });
 
+      const typeRequiredMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.typeRequired',
+      });
+
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
@@ -81,7 +85,8 @@ const EditListingDescriptionFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
-
+      const isListingPublished = props.listing.attributes.state === "published";
+      
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
@@ -115,6 +120,17 @@ const EditListingDescriptionFormComponent = props => (
             certificateOptions={certificateOptions}
             intl={intl}
           /> */}
+
+          {isListingPublished ? 
+          <p className={css.listingType}>Type: {props.listing.attributes.publicData.type === "bookable" ? "bookable" : "quantitively"}</p>
+            : 
+            <FieldSelect id="type" name="type" label="What type is your product ?" validate={composeValidators(required(typeRequiredMessage))}>
+            <option value="" disabled hidden>Pick something...</option>
+            <option value="bookable">bookable</option>
+            <option value="quantity">quantitively</option>
+          </FieldSelect>
+        }
+          
 
           <Button
             className={css.submitButton}

@@ -94,6 +94,7 @@
   "BookingPanel.selleredBy": "Hosted by {name}",
   "BookingPanel.perDay": "per day",
   "BookingPanel.perNight": "per night",
+  "BookingPanel.perHour": "per hour",
   "BookingPanel.perUnit": "per unit",
   "BookingPanel.subTitleClosedListing": "Sorry, this product is not active anymore.",
   "BookingTimeForm.bookingEndTitle": "End date",
@@ -268,7 +269,7 @@
   "EditListingPricingForm.updateFailed": "Failed to update listing. Please try again.",
   "EditListingPricingPanel.createListingTitle": "How much do your sessions cost?",
   "EditListingPricingPanel.listingPriceCurrencyInvalid": "Currency in product is different from the marketplace currency. You cannot edit the price.",
-  "EditListingPricingPanel.listingTitle": "your sessions",
+  "EditListingPricingPanel.listingTitle": "your product",
   "EditListingPricingPanel.title": "Edit the pricing of {listingTitle}",
   "EditListingWizard.payoutModalInfo": "Almost done! In order to send you money, we need to know a bit more about you. Next, we will guide you through verifying your account. The details can also be edited from Account Setting page on Payout details tab. ",
   "EditListingWizard.payoutModalTitleOneMoreThing": "One more thing:",
@@ -287,7 +288,8 @@
   "EditListingWizard.saveNewAvailability": "Next: Photos",
   "EditListingWizard.saveNewPhotos": "Publish product",
   "EditListingWizard.saveNewPolicies": "Next: Location",
-  "EditListingWizard.saveNewPricing": "Next: Availability",
+  "EditListingWizard.saveNewPricingBookable": "Next: Availability",
+  "EditListingWizard.saveNewPricingQuantity": "Next: Photos",
   "EditListingWizard.tabLabelDescription": "Description",
   "EditListingWizard.tabLabelFeatures": "Categories",
   "EditListingWizard.tabLabelAvailability": "Availability",
@@ -365,7 +367,7 @@
   "InboxPage.fetchFailed": "Could not load all messages. Please try again.",
   "InboxPage.noOrdersFound": "You haven't made any bookings.",
   "InboxPage.noSalesFound": "Nobody has booked anything from you yet.",
-  "InboxPage.ordersTabTitle": "Products",
+  "InboxPage.ordersTabTitle": "Orders",
   "InboxPage.ordersTitle": "Inbox: Products",
   "InboxPage.salesTabTitle": "Selling",
   "InboxPage.salesTitle": "Inbox: Selling",
@@ -1121,7 +1123,9 @@
   "EditListingAvailabilityPlanForm.timezonePickerTitle": "Time zone",
   "EditListingAvailabilityPlanForm.title": "Edit default schedule for {listingTitle}",
   "EditListingAvailabilityPlanForm.updateFailed": "Failed to update. Please try again.",
-  "TopbarDesktop.yourListingsLink": "Your listings"
-
-
+  "TopbarDesktop.yourListingsLink": "Your listings",
+  "EditListingDescriptionForm.typeRequired": "You need to select a type",
+  "EditListingLocationPanel.listingTitle": "your product",
+  "EditListingFeaturesPanel.listingTitle": "your product",
+  "EditListingDescriptionPanel.listingTitle": "your product"
 }

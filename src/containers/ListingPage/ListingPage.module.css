@@ -385,6 +385,8 @@
 }
 
 .author {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   @apply --marketplaceH5FontStyles;
   margin-top: 7px;

@@ -224,8 +224,9 @@ const EditListingWizardTab = props => {
       );
     }
     case PRICING: {
+      const type = listing.attributes.publicData.type;
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPricing'
+        ? type === 'bookable' ? 'EditListingWizard.saveNewPricingBookable' : 'EditListingWizard.saveNewPricingQuantity'
         : 'EditListingWizard.saveEditPricing';
       return (
         <EditListingPricingPanel
