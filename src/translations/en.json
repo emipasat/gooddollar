@@ -344,7 +344,7 @@
   "Footer.goToTwitter": "Go to Twitter page",
   "Footer.organizationDescription": "The largest online community to buy products with G$.",
   "Footer.privacy": "Privacy",
-  "Footer.privacyPolicy": "Privacy policy",
+  "Footer.privacyPolicy": "Privacy Policy",
   "Footer.searchBoston": "Boston",
   "Footer.searchBoulder": "Boulder",
   "Footer.searchDenver": "Denver",
@@ -356,7 +356,7 @@
   "Footer.searchSanFrancisco": "San Francisco",
   "Footer.searchSeattle": "Seattle",
   "Footer.terms": "Terms",
-  "Footer.termsOfUse": "Terms of Service",
+  "Footer.termsOfUse": "Terms of Use",
   "Footer.toAboutPage": "About us",
   "Footer.toContactPage": "Contact",
   "Footer.toFAQPage": "FAQ",
@@ -1127,5 +1127,6 @@
   "EditListingDescriptionForm.typeRequired": "You need to select a type",
   "EditListingLocationPanel.listingTitle": "your product",
   "EditListingFeaturesPanel.listingTitle": "your product",
-  "EditListingDescriptionPanel.listingTitle": "your product"
+  "EditListingDescriptionPanel.listingTitle": "your product",
+  "Footer.toSafetyTips": "Safety Tips"
 }
