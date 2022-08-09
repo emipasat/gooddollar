@@ -175,23 +175,22 @@
   bottom: 0;
   left: 0;
   width: 100vw;
-  padding: 18px 24px 18px 16px;
   background-color: var(--matterColorLight);
   box-shadow: var(--boxShadowTop);
   display: flex;
-
+  flex-direction: column;
   /* Contain repainting to this component only */
   /* 3D painting container helps scrolling */
   transform: translate3d(0, 0, 0);
 
-  @media (--viewportMedium) {
-    padding: 18px 60px 18px 60px;
-  }
+
 
   @media (--viewportLarge) {
     display: none;
   }
 }
+
+
 
 .priceContainer {
   /* Layout */
@@ -241,4 +240,49 @@
   width: 100%;
   padding: 15px 24px 15px 24px;
   text-align: center;
+}
+
+.disclaimerWrapperDesktop{
+  width: 100%;
+  background-color: rgba(255, 214, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  padding: 10px;
+  border: 1px solid #FFD600;
+  border-radius: 5px;
+  margin-top: 20px;
+
+  @media(max-width: 1025px){
+    display: none;
+  }
+}
+
+.disclaimerWrapperMobile{
+  width: 100%;
+  background-color: rgba(255, 214, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid #FFD600;
+  margin-top: 20px;
+  max-height: 120px;
+  @media(min-width: 1025px){
+    display: none;
+  }
+}
+
+.bookFormButtonWrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  padding: 18px 24px 18px 16px;
+  @media (--viewportMedium) {
+    padding: 18px 60px 18px 60px;
+  }
 }

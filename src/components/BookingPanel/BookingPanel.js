@@ -13,8 +13,8 @@ import { ModalInMobile, Button } from '../../components';
 import { BookingTimeForm } from '../../forms';
 import { types as sdkTypes } from '../../util/sdkLoader';
 
-
 import css from './BookingPanel.module.css';
+import Disclaimer from '../Disclaimer/Disclaimer';
 
 const { Money } = sdkTypes;
 
@@ -76,15 +76,17 @@ const BookingPanel = props => {
     fetchLineItemsInProgress,
     fetchLineItemsError,
     noAccountAddedMessage,
-    type
+    type,
   } = props;
   const listingType = listing.attributes.publicData.type;
-  const price = listing.attributes.price ? listing.attributes.price : new Money(listing.attributes.publicData.priceInG, 'USD');
+  const price = listing.attributes.price
+    ? listing.attributes.price
+    : new Money(listing.attributes.publicData.priceInG, 'USD');
   const timeZone =
     listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
-  const showBookingTimeForm = hasListingState && !isClosed && (noAccountAddedMessage === '');
+  const showBookingTimeForm = hasListingState && !isClosed && noAccountAddedMessage === '';
   const showClosedListingHelpText = listing.id && isClosed;
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
@@ -98,13 +100,14 @@ const BookingPanel = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = listingType === 'bookable' ? 
-      'BookingPanel.perHour' :
-       isNightly
-    ? 'BookingPanel.perNight'
-    : isDaily
-    ? 'BookingPanel.perDay'
-    : 'BookingPanel.perUnit';
+  const unitTranslationKey =
+    listingType === 'bookable'
+      ? 'BookingPanel.perHour'
+      : isNightly
+      ? 'BookingPanel.perNight'
+      : isDaily
+      ? 'BookingPanel.perDay'
+      : 'BookingPanel.perUnit';
 
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.bookingTitle);
@@ -161,28 +164,32 @@ const BookingPanel = props => {
           />
         ) : null}
       </ModalInMobile>
+      <Disclaimer rootClassName={css.disclaimerWrapperDesktop} />
       <div className={css.openBookingForm}>
-        <div className={css.priceContainer}>
-          <div className={css.priceValue} title={priceTitle}>
-            {formattedPrice}
+        <div className={css.bookFormButtonWrapper}>
+          <div className={css.priceContainer}>
+            <div className={css.priceValue} title={priceTitle}>
+              {formattedPrice}
+            </div>
+            <div className={css.perUnit}>
+              <FormattedMessage id={unitTranslationKey} />
+            </div>
           </div>
-          <div className={css.perUnit}>
-            <FormattedMessage id={unitTranslationKey} />
-          </div>
-        </div>
 
-        {showBookingTimeForm ? (
-          <Button
-            rootClassName={css.bookButton}
-            onClick={() => openBookModal(isOwnListing, isClosed, history, location)}
-          >
-            <FormattedMessage id="BookingPanel.ctaButtonMessage" />
-          </Button>
-        ) : isClosed ? (
-          <div className={css.closedListingButton}>
-            <FormattedMessage id="BookingPanel.closedListingButtonText" />
-          </div>
-        ) : null}
+          {showBookingTimeForm ? (
+            <Button
+              rootClassName={css.bookButton}
+              onClick={() => openBookModal(isOwnListing, isClosed, history, location)}
+            >
+              <FormattedMessage id="BookingPanel.ctaButtonMessage" />
+            </Button>
+          ) : isClosed ? (
+            <div className={css.closedListingButton}>
+              <FormattedMessage id="BookingPanel.closedListingButtonText" />
+            </div>
+          ) : null}
+        </div>
+        <Disclaimer rootClassName={css.disclaimerWrapperMobile} />
       </div>
     </div>
   );
@@ -198,7 +205,7 @@ BookingPanel.defaultProps = {
   monthlyTimeSlots: null,
   lineItems: null,
   fetchLineItemsError: null,
-  noAccountAddedMessage: ''
+  noAccountAddedMessage: '',
 };
 
 BookingPanel.propTypes = {
