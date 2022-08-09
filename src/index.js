@@ -67,9 +67,21 @@ const setupAnalyticsHandlers = () => {
     handlers.push(new LoggingAnalyticsHandler());
   }
 
-  // Add Google Analytics handler if tracker ID is found
+  // Add Google Analytics 4 (GA4) handler if tracker ID is found
   if (process.env.REACT_APP_GOOGLE_ANALYTICS_ID) {
-    handlers.push(new GoogleAnalyticsHandler(window.ga));
+    if (window?.gtag) {
+      handlers.push(new GoogleAnalyticsHandler(window.gtag));
+    } else {
+      // Some adblockers (e.g. Ghostery) might block the Google Analytics integration.
+      console.warn(
+        'Google Analytics (window.gtag) is not available. It might be that your adblocker is blocking it.'
+      );
+    }
+    if (process.env.REACT_APP_GOOGLE_ANALYTICS_ID.indexOf('G-') !== 0) {
+      console.warn(
+        'Google Analytics 4 (GA4) should have measurement id that starts with "G-" prefix'
+      );
+    }
   }
 
   return handlers;
