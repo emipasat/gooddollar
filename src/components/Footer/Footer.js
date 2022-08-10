@@ -88,6 +88,17 @@ const Footer = props => {
                     <FormattedMessage id="Footer.toNewListingPage" />
                   </NamedLink>
                 </li>
+
+                <li className={css.listItem}>
+                  <a
+                    href="https://gooddollar.notion.site/GoodMarket-Safety-Tips-4ccb6cc4b96d4cd3a71d63e116436a1a"
+                    target="_blank"
+                    className={css.link}
+                  >
+                    <FormattedMessage id="Footer.toSafetyTips" />
+                  </a>
+                </li>
+
                 {/* <li className={css.listItem}>
                   <NamedLink name="AboutPage" className={css.link}>
                     <FormattedMessage id="Footer.toAboutPage" />
@@ -241,18 +252,26 @@ const Footer = props => {
             <div className={css.extraLinks}>
               <div className={css.someLinks}>{socialMediaLinks}</div>
               <div className={css.legalMatters}>
-                {/* <ul className={css.tosAndPrivacy}>
+                <ul className={css.tosAndPrivacy}>
                   <li>
-                    <NamedLink name="TermsOfServicePage" className={css.legalLink}>
+                    <a
+                      href="https://gooddollar.notion.site/GoodMarket-Terms-of-Use-dfa3bba10f06409789f35c112423b755"
+                      target="_blank"
+                      className={css.legalLink}
+                    >
                       <FormattedMessage id="Footer.termsOfUse" />
-                    </NamedLink>
+                    </a>
                   </li>
                   <li>
-                    <NamedLink name="PrivacyPolicyPage" className={css.legalLink}>
+                    <a
+                      href="https://gooddollar.notion.site/GoodMarket-Privacy-Policy-0c43abfd74944ee9988e7bae23b074ae"
+                      target="_blank"
+                      className={css.legalLink}
+                    >
                       <FormattedMessage id="Footer.privacyPolicy" />
-                    </NamedLink>
+                    </a>
                   </li>
-                </ul> */}
+                </ul>
               </div>
             </div>
           </div>
@@ -261,12 +280,20 @@ const Footer = props => {
               <FormattedMessage id="Footer.copyright" />
             </NamedLink>
             <div className={css.tosAndPrivacyMobile}>
-              <NamedLink name="PrivacyPolicyPage" className={css.privacy}>
+              <a
+                href="https://gooddollar.notion.site/GoodMarket-Privacy-Policy-0c43abfd74944ee9988e7bae23b074ae"
+                target="_blank"
+                className={css.privacy}
+              >
                 <FormattedMessage id="Footer.privacy" />
-              </NamedLink>
-              <NamedLink name="TermsOfServicePage" className={css.terms}>
+              </a>
+              <a
+                href="https://gooddollar.notion.site/GoodMarket-Terms-of-Use-dfa3bba10f06409789f35c112423b755"
+                target="_blank"
+                className={css.terms}
+              >
                 <FormattedMessage id="Footer.terms" />
-              </NamedLink>
+              </a>
             </div>
           </div>
         </div>
