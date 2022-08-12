@@ -93,8 +93,6 @@ export class ListingPageComponent extends Component {
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
   }
 
-  
-
   handleSubmit(values) {
     const {
       history,
@@ -107,8 +105,18 @@ export class ListingPageComponent extends Component {
     const listing = getListing(listingId);
     const type = listing.attributes.publicData.type;
     const { bookingStartTime, bookingEndTime, ...restOfValues } = values;
-    const bookingStart = type === 'bookable' ? timestampToDate(bookingStartTime) : moment().add(1, 'days').toDate();
-    const bookingEnd = type === 'bookable' ? timestampToDate(bookingEndTime) : moment().add(2, 'days').toDate();
+    const bookingStart =
+      type === 'bookable'
+        ? timestampToDate(bookingStartTime)
+        : moment()
+            .add(1, 'days')
+            .toDate();
+    const bookingEnd =
+      type === 'bookable'
+        ? timestampToDate(bookingEndTime)
+        : moment()
+            .add(2, 'days')
+            .toDate();
 
     // const bookingStart = moment().add(1, 'days').toDate();
     // const bookingEnd = moment().add(2, 'days').toDate();
@@ -213,8 +221,6 @@ export class ListingPageComponent extends Component {
       fetchLineItemsError,
     } = this.props;
 
-
-
     const listingId = new UUID(rawParams.id);
     const isPendingApprovalVariant = rawParams.variant === LISTING_PAGE_PENDING_APPROVAL_VARIANT;
     const isDraftVariant = rawParams.variant === LISTING_PAGE_DRAFT_VARIANT;
@@ -261,7 +267,6 @@ export class ListingPageComponent extends Component {
       publicData,
     } = currentListing.attributes;
 
-    
     const richTitle = (
       <span>
         {richText(title, {
@@ -353,24 +358,23 @@ export class ListingPageComponent extends Component {
 
     let noAccountAddedMessage = '';
 
-    if (!currentAuthor.attributes.profile.publicData || !currentAuthor.attributes.profile.publicData.goodDollarAccount)
-    {
-      noAccountAddedMessage = "This user doesn't added his G$ account yet. Contact him and ask him to add it to his profile.";
+    if (
+      !currentAuthor.attributes.profile.publicData ||
+      !currentAuthor.attributes.profile.publicData.goodDollarAccount
+    ) {
+      noAccountAddedMessage =
+        "This user didn't add his G$ account yet. Contact him and ask him to add it to his profile.";
     }
 
     const handleBookingSubmit = values => {
-
-      if (currentAuthor.attributes.profile.publicData.goodDollarAccount)
-      {
+      if (currentAuthor.attributes.profile.publicData.goodDollarAccount) {
         const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
         if (isOwnListing || isCurrentlyClosed) {
           window.scrollTo(0, 0);
         } else {
           this.handleSubmit(values);
         }
-      }
-      else 
-      {
+      } else {
         noAccountAddedMessage = "This user doesn't added his G$ account yet";
       }
     };
