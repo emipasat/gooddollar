@@ -91,8 +91,8 @@ export class AuthenticationPageComponent extends Component {
     const locationFrom = location.state && location.state.from ? location.state.from : null;
     const authinfoFrom =
       this.state.authInfo && this.state.authInfo.from ? this.state.authInfo.from : null;
-    const from = locationFrom ? locationFrom : authinfoFrom ? authinfoFrom : null;
-
+    // const from = locationFrom ? locationFrom : authinfoFrom ? authinfoFrom : null;
+    const from = typeof window !== 'undefined' && window?.location?.origin;
     const user = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!user.id;
 
