@@ -92,7 +92,6 @@ export class AuthenticationPageComponent extends Component {
     const authinfoFrom =
       this.state.authInfo && this.state.authInfo.from ? this.state.authInfo.from : null;
     const from = locationFrom ? locationFrom : authinfoFrom ? authinfoFrom : null;
-
     const user = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!user.id;
 
@@ -215,19 +214,32 @@ export class AuthenticationPageComponent extends Component {
       // Route for confirming user data before creating a new user
       const defaultConfirm = pathByRouteName('ConfirmPage', routes);
       const defaultConfirmParam = defaultConfirm ? `&defaultConfirm=${defaultConfirm}` : '';
+      const originalUrl = typeof window !== 'undefined' && `&originalUrl=${window.location.origin}`;
 
-      return { baseUrl, fromParam, defaultReturnParam, defaultConfirmParam };
+      return { baseUrl, fromParam, defaultReturnParam, defaultConfirmParam, originalUrl };
     };
     const authWithFacebook = () => {
       const defaultRoutes = getDefaultRoutes();
-      const { baseUrl, fromParam, defaultReturnParam, defaultConfirmParam } = defaultRoutes;
-      window.location.href = `${baseUrl}/api/auth/facebook?${fromParam}${defaultReturnParam}${defaultConfirmParam}`;
+      const {
+        baseUrl,
+        fromParam,
+        defaultReturnParam,
+        defaultConfirmParam,
+        originalUrl,
+      } = defaultRoutes;
+      window.location.href = `${baseUrl}/api/auth/facebook?${fromParam}${defaultReturnParam}${defaultConfirmParam}${originalUrl}`;
     };
 
     const authWithGoogle = () => {
       const defaultRoutes = getDefaultRoutes();
-      const { baseUrl, fromParam, defaultReturnParam, defaultConfirmParam } = defaultRoutes;
-      window.location.href = `${baseUrl}/api/auth/google?${fromParam}${defaultReturnParam}${defaultConfirmParam}`;
+      const {
+        baseUrl,
+        fromParam,
+        defaultReturnParam,
+        defaultConfirmParam,
+        originalUrl,
+      } = defaultRoutes;
+      window.location.href = `${baseUrl}/api/auth/google?${fromParam}${defaultReturnParam}${defaultConfirmParam}${originalUrl}`;
     };
 
     const idp = this.state.authInfo
