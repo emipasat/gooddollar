@@ -19,14 +19,6 @@ if (useDevApiServer) {
   callbackURL = `${rootUrl}/api/auth/facebook/callback`;
 }
 
-const strategyOptions = {
-  clientID,
-  clientSecret,
-  callbackURL,
-  profileFields: ['id', 'name', 'emails'],
-  passReqToCallback: true,
-};
-
 const verifyCallback = (req, accessToken, refreshToken, profile, done) => {
   const { email, first_name, last_name } = profile._json;
   const state = req.query.state;
@@ -48,15 +40,24 @@ const verifyCallback = (req, accessToken, refreshToken, profile, done) => {
   done(null, userData);
 };
 
-// ClientId is required when adding a new Facebook strategy to passport
-if (clientID) {
-  passport.use(new FacebookStrategy(strategyOptions, verifyCallback));
-}
-
 exports.authenticateFacebook = (req, res, next) => {
   const from = req.query.from ? req.query.from : null;
   const defaultReturn = req.query.defaultReturn ? req.query.defaultReturn : null;
   const defaultConfirm = req.query.defaultConfirm ? req.query.defaultConfirm : null;
+  const originalUrl = req.query.originalUrl ? req.query.originalUrl : null;
+
+  const strategyOptions = {
+    clientID,
+    clientSecret,
+    callbackURL: `${originalUrl}/api/auth/facebook/callback`,
+    profileFields: ['id', 'name', 'emails'],
+    passReqToCallback: true,
+  };
+
+  // ClientId is required when adding a new Facebook strategy to passport
+  if (clientID) {
+    passport.use(new FacebookStrategy(strategyOptions, verifyCallback));
+  }
 
   const params = {
     ...(!!from && { from }),

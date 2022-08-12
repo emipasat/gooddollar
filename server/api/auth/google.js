@@ -18,13 +18,6 @@ if (useDevApiServer) {
   callbackURL = `${rootUrl}/api/auth/google/callback`;
 }
 
-const strategyOptions = {
-  clientID,
-  clientSecret,
-  callbackURL,
-  passReqToCallback: true,
-};
-
 const verifyCallback = (req, accessToken, refreshToken, rawReturn, profile, done) => {
   // We need to add additional parameter `rawReturn` to the callback
   // so that we can access the id_token coming from Google
@@ -50,15 +43,23 @@ const verifyCallback = (req, accessToken, refreshToken, rawReturn, profile, done
   done(null, userData);
 };
 
-// ClientId is required when adding a new Google strategy to passport
-if (clientID) {
-  passport.use(new GoogleStrategy(strategyOptions, verifyCallback));
-}
-
 exports.authenticateGoogle = (req, res, next) => {
   const from = req.query.from ? req.query.from : null;
   const defaultReturn = req.query.defaultReturn ? req.query.defaultReturn : null;
   const defaultConfirm = req.query.defaultConfirm ? req.query.defaultConfirm : null;
+  const originalUrl = req.query.originalUrl ? req.query.originalUrl : null;
+
+  const strategyOptions = {
+    clientID,
+    clientSecret,
+    callbackURL: `${originalUrl}/api/auth/google/callback`,
+    passReqToCallback: true,
+  };
+
+  // ClientId is required when adding a new Google strategy to passport
+  if (clientID) {
+    passport.use(new GoogleStrategy(strategyOptions, verifyCallback));
+  }
 
   const params = {
     ...(!!from && { from }),
