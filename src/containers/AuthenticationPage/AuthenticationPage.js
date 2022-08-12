@@ -271,7 +271,7 @@ export class AuthenticationPageComponent extends Component {
 
     // Social login buttons
     const showFacebookLogin = !!process.env.REACT_APP_FACEBOOK_APP_ID;
-    const showGoogleLogin = true; //!!process.env.REACT_APP_GOOGLE_CLIENT_ID;
+    const showGoogleLogin = !!process.env.REACT_APP_GOOGLE_CLIENT_ID;
     const showSocialLogins = showFacebookLogin || showGoogleLogin;
 
     const facebookButtonText = isLogin ? (
