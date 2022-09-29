@@ -199,7 +199,7 @@ export class TransactionPanelComponent extends Component {
       lineItems,
       fetchLineItemsInProgress,
       fetchLineItemsError,
-      isAccepted
+      isAccepted,
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -208,7 +208,9 @@ export class TransactionPanelComponent extends Component {
     const currentCustomer = ensureUser(currentTransaction.customer);
     const isCustomer = transactionRole === 'customer';
     const isProvider = transactionRole === 'provider';
-    const quantity = currentTransaction.attributes.metadata.quantity ? currentTransaction.attributes.metadata.quantity : 1;
+    const quantity = currentTransaction.attributes.metadata.quantity
+      ? currentTransaction.attributes.metadata.quantity
+      : 1;
 
     const listingLoaded = !!currentListing.id;
     const listingDeleted = listingLoaded && currentListing.attributes.deleted;
@@ -219,74 +221,64 @@ export class TransactionPanelComponent extends Component {
     const isProviderBanned = isProviderLoaded && currentProvider.attributes.banned;
     const isProviderDeleted = isProviderLoaded && currentProvider.attributes.deleted;
 
-
     // QR code %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+    const account = 'm';
+    const amount = 'a';
+    const product = 'r';
+    const category = 'cat';
+    const ven = 'ven';
+    const cbu = 'cbu';
+    const web = 'web';
+    const ind = 'ind';
+    const uuid = 'uuid';
 
-  const account = 'm';
-  const amount = 'a';
-  const product = 'r';
-  const category = 'cat';
-  const ven = 'ven';
-  const cbu = 'cbu';
-  const web = 'web';
-  const ind = 'ind';
-  const uuid = 'uuid';
+    const venObj = {
+      //[cbu]: canonicalRootURL + '/order/' + values.orderId.uuid + '/details',
+      [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + currentTransaction.id.uuid,
+      [web]: canonicalRootURL,
+      [ven]: 'Good Dollar',
+      [ind]: 'used_for_what',
+      [uuid]: currentTransaction.id.uuid,
+    };
 
-  const venObj = {
-    //[cbu]: canonicalRootURL + '/order/' + values.orderId.uuid + '/details',
-    [cbu]: canonicalRootURL + '/api/accept-privileged?txId=' + currentTransaction.id.uuid,
-    [web]: canonicalRootURL,
-    [ven]: 'Good Dollar',
-    [ind]: 'used_for_what',
-    [uuid]: currentTransaction.id.uuid
-  };
+    const obj = {
+      [account]: currentListing.author.attributes.profile.publicData.goodDollarAccount,
+      [amount]: currentListing.attributes.price.amount * quantity,
+      [product]: currentListing.attributes.title,
+      [category]: currentListing.attributes.publicData.category,
+      [ven]: venObj,
+    };
 
+    let objJsonStr = JSON.stringify(obj);
+    let objJsonB64 = Buffer.from(objJsonStr).toString('base64');
 
-  const obj = {
-    [account]: currentListing.author.attributes.profile.publicData.goodDollarAccount,
-    [amount]: currentListing.attributes.price.amount * quantity,
-    [product]: currentListing.attributes.title,
-    [category]: currentListing.attributes.publicData.category,
-    [ven]: venObj
-};
+    const finalUrl = process.env.REACT_APP_WALLET_URL + '?code=' + objJsonB64;
 
-let objJsonStr = JSON.stringify(obj);
-          let objJsonB64 = Buffer.from(objJsonStr).toString("base64");  
+    const openPaymentLink = () => {
+      const w = window.open('', '_blank', 'height=950,width=560');
+      w.document.write(
+        '<html><head></head><body>Please wait while we load your wallet</body></html>'
+      );
+      w.document.close();
 
-         const finalUrl = process.env.REACT_APP_WALLET_URL + '?code=' + objJsonB64;
+      let windowObj = false;
 
+      setTimeout(() => {
+        if (finalUrl) {
+          w.location = finalUrl;
+          windowObj = w;
+        }
+      }, 1500);
 
-      const openPaymentLink = () => {
-        const w = window.open('', '_blank', "height=950,width=560");
-        w.document.write("<html><head></head><body>Please wait while we load your wallet</body></html>");
-        w.document.close();
-
-        let windowObj = false;
-
-        setTimeout(()=> {
-          if (finalUrl)
-          {
-            w.location = finalUrl;
-            windowObj = w
-          }
-        }, 1500);
-    
-    
-        window.onbeforeunload = (event) => {
-    
-          if (windowObj)
-          {
-            windowObj.close();
-          }
-        };
-      
-      }
-
+      window.onbeforeunload = event => {
+        if (windowObj) {
+          windowObj.close();
+        }
+      };
+    };
 
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    
 
     const stateDataFn = tx => {
       if (txIsEnquired(tx)) {
@@ -338,6 +330,7 @@ let objJsonStr = JSON.stringify(obj);
           headingState: HEADING_DELIVERED,
           showDetailCardHeadings: isCustomer,
           showAddress: isCustomer,
+          txCompleted: true,
         };
       } else {
         return { headingState: 'unknown' };
@@ -366,7 +359,6 @@ let objJsonStr = JSON.stringify(obj);
     const isNightly = unitType === LINE_ITEM_NIGHT;
     const isDaily = unitType === LINE_ITEM_DAY;
 
-
     const type = currentListing.attributes.publicData.type;
     const listingPrice = currentListing.attributes.price.amount / 100;
 
@@ -384,15 +376,13 @@ let objJsonStr = JSON.stringify(obj);
     const firstImage =
       currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
-
     let isButtonDisabled = true;
 
     console.log(currentTransaction);
 
-    if (currentTransaction.attributes.lastTransition === 'transition/accept'){
-        isButtonDisabled = false;
+    if (currentTransaction.attributes.lastTransition === 'transition/accept') {
+      isButtonDisabled = false;
     }
-  
 
     const saleButtons = (
       <SaleActionButtonsMaybe
@@ -456,7 +446,7 @@ let objJsonStr = JSON.stringify(obj);
               listingTitle={listingTitle}
               listingDeleted={listingDeleted}
             />
-      {/* <p>{finalUrl}</p> */}
+            {/* <p>{finalUrl}</p> */}
             <div className={css.bookingDetailsMobile}>
               <AddressLinkMaybe
                 rootClassName={css.addressMobile}
@@ -476,20 +466,24 @@ let objJsonStr = JSON.stringify(obj);
               </p>
             ) : null}
 
-                <br/>
+            <br />
 
-                {isAccepted ? null : 
-                <div className={css.paymentlinkWrapper}>
-
-                 <span>If you didn't pay yet click <span onClick={openPaymentLink} className={css.paymentLink}>here</span> or scan the QR code below</span>
-                  <br/>
-                  <QRCode value={finalUrl} level="L"/>
-                </div>
-                      }
-
-
-
-
+            {isAccepted
+              ? null
+              : isCustomer &&
+                !stateData.txCompleted && (
+                  <div className={css.paymentlinkWrapper}>
+                    <span>
+                      If you didn't pay yet click{' '}
+                      <span onClick={openPaymentLink} className={css.paymentLink}>
+                        here
+                      </span>{' '}
+                      or scan the QR code below
+                    </span>
+                    <br />
+                    <QRCode value={finalUrl} level="L" />
+                  </div>
+                )}
 
             <FeedSection
               rootClassName={css.feedContainer}
@@ -505,19 +499,16 @@ let objJsonStr = JSON.stringify(obj);
               totalMessagePages={totalMessagePages}
             />
 
-
-            {!isProvider && currentTransaction.attributes.lastTransition == "transition/accept" ? (
+            {!isProvider && currentTransaction.attributes.lastTransition == 'transition/accept' ? (
               <div className={css.submitContainer} style={{ margin: 30 }}>
                 <SecondaryButton
-                  
-                    rootClassName={isButtonDisabled ? css.cancelButtonDisabled : css.cancelButton}
-                    onClick={() => onCompleteSale(currentTransaction.id)} 
-                  >
-                    
-                    Complete sale
-                  </SecondaryButton>
-              </div>)
-            :null}
+                  rootClassName={isButtonDisabled ? css.cancelButtonDisabled : css.cancelButton}
+                  onClick={() => onCompleteSale(currentTransaction.id)}
+                >
+                  Complete sale
+                </SecondaryButton>
+              </div>
+            ) : null}
 
             {showSendMessageForm ? (
               <SendMessageForm
@@ -585,34 +576,37 @@ let objJsonStr = JSON.stringify(obj);
               />
 
               <div className={css.breakdownWrapper}>
-                        {type === 'bookable' ?
+                {type === 'bookable' ? (
+                  <>
+                    <div className={css.lineItemHours}>
+                      <p className={css.lineItemInfo}>{`G$${listingPrice}.00 * ${quantity} ${
+                        quantity > 1 ? 'hours' : 'hour'
+                      }`}</p>
+                      <p className={css.lineItemInfo}>{`G$${listingPrice * quantity}.00`}</p>
+                    </div>
+                    <div className={css.lineItemTotal}>
+                      <p className={css.lineItemInfo}>{`Total price`}</p>
+                      <p className={css.lineItemInfo}>
+                        <strong>{`G$${listingPrice * quantity}.00`}</strong>
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={css.lineItemTotal}>
+                      <p className={css.lineItemInfo}>{`Total price`}</p>
+                      <p className={css.lineItemInfo}>
+                        <strong>{`G$${listingPrice * quantity}.00`}</strong>
+                      </p>
+                    </div>
+                  </>
+                )}
 
-                        <>
-                            <div className={css.lineItemHours}>
-                                  <p className={css.lineItemInfo}>{`G$${listingPrice}.00 * ${quantity} ${quantity > 1 ? "hours" : "hour"}`}</p>
-                                  <p className={css.lineItemInfo}>{`G$${listingPrice * quantity}.00`}</p>
-                            </div>
-                            <div className={css.lineItemTotal}>
-                                    <p className={css.lineItemInfo}>{`Total price`}</p>
-                                    <p className={css.lineItemInfo}><strong>{`G$${listingPrice * quantity}.00`}</strong></p>
-                            </div>
-                        </>
-
-                        : <>
-                            <div className={css.lineItemTotal}>
-                                    <p className={css.lineItemInfo}>{`Total price`}</p>
-                                    <p className={css.lineItemInfo}><strong>{`G$${listingPrice * quantity}.00`}</strong></p>
-                            </div>
-                        </>}
-
-
-
-              {stateData.showSaleButtons ? (
+                {/* {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
-              ) : null}
-            </div>
+              ) : null} */}
               </div>
-          
+            </div>
           </div>
         </div>
         <ReviewModal
