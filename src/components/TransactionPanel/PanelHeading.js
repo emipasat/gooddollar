@@ -61,7 +61,7 @@ const HeadingCustomerWithSubtitle = props => {
         </span>
         {/* <FormattedMessage id={subtitleId} values={subtitleValues} /> */}
       </h1>
-      {children}
+      {/* {children} */}
       <ListingDeletedInfoMaybe listingDeleted={listingDeleted} />
     </React.Fragment>
   );
@@ -84,7 +84,7 @@ const HeadingProvider = props => {
           <FormattedMessage id={id} values={values} />
         </span>
       </h1>
-      {children}
+      {/* {children} */}
       <CustomerBannedInfoMaybe isCustomerBanned={isCustomerBanned} />
     </React.Fragment>
   );
