@@ -126,76 +126,64 @@ export const filters = [
     config: {
       options: [
         {
-          key: 'artAndCollectibles',
-          label: 'Art and collectibles',
+          key: 'digitalCollectibles&NFTs',
+          label: 'Digital Collectibles & NFTs',
         },
         {
-          key: 'mensApparel',
-          label: 'Mens apparel',
+          key: 'Apparel',
+          label: 'apparel',
         },
         {
-          key: 'womensApparel',
-          label: 'Womens apparel',
-        },
-        {
-          key: 'charitableOrganizationsDonateG',
-          label: 'Charitable organisations (donate G$)',
-        },
-        {
-          key: 'digitalServicesOnline',
-          label: 'Digital services (online)',
+          key: 'art&collectibles',
+          label: 'Art & collectibles',
         },
         {
           key: 'electronics',
-          label: 'electronics',
+          label: 'Electronics',
         },
         {
-          key: 'foodAndGrocery',
-          label: 'food and grocery',
+          key: 'homeGoods&others',
+          label: 'Home Goods & others',
         },
         {
-          key: 'homeAndGarden',
-          label: 'Home and garden',
+          key: 'foodProducts',
+          label: 'Food Products',
         },
         {
-          key: 'localServices',
-          label: 'Local services',
+          key: 'airtime',
+          label: 'Airtime',
         },
         {
-          key: 'musicalInstruments',
-          label: 'Musical instruments',
+          key: 'graphics&CreativeServices',
+          label: 'Graphics & Creative Services',
         },
         {
-          key: 'offersEarnGForCompletingTasks',
+          key: 'development&ITServices',
+          label: 'Development & IT Services',
+        },
+        {
+          key: 'sales&MarketingServices',
+          label: 'Sales & Marketing Services',
+        },
+        {
+          key: 'cryptocurrency&blockchainServices',
+          label: 'Cryptocurrency & blockchain Services',
+        },
+        {
+          key: 'onsultingMentoring&professionaldevelopment',
+          label: 'Consulting, Mentoring & professional development',
+        },
+        {
+          key: 'offersearnG$forcompletingtasks)',
           label: 'Offers (earn G$ for completing tasks)',
         },
         {
-          key: 'petSupplies',
-          label: 'Pet supplies',
+          key: 'localServiceschildcarelawncaremassageetc',
+          label: 'Local Services (childcare, lawn care, massage, etc.)',
         },
         {
-          key: 'sportingGoods',
-          label: 'Sporting goods',
-        },
-        {
-          key: 'toysAndGames',
-          label: 'Toys and games',
-        },
-        {
-          key: 'languageTutors',
-          label: 'Language tutors',
-        },
-        {
-          key: 'logoDesign',
-          label: 'Logo design',
-        },
-        {
-          key: 'cryptocurrencyAndBlockchain',
-          label: 'Cryptocurrency and blockchain',
-        },
-        {
-          key: 'professionalServices',
-          label: 'Professional services',
+          key: 'socialCausesdonateG$',
+          label: 'Social Causes (donate G$)',
         },
       ],
     },
