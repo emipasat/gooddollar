@@ -126,15 +126,15 @@ export const filters = [
     config: {
       options: [
         {
-          key: 'digitalCollectibles&NFTs',
+          key: 'digitalcollectiblesnfts',
           label: 'Digital Collectibles & NFTs',
         },
         {
-          key: 'Apparel',
+          key: 'apparel',
           label: 'apparel',
         },
         {
-          key: 'art&collectibles',
+          key: 'artcollectibles',
           label: 'Art & collectibles',
         },
         {
@@ -142,11 +142,11 @@ export const filters = [
           label: 'Electronics',
         },
         {
-          key: 'homeGoods&others',
+          key: 'homegoodsothers',
           label: 'Home Goods & others',
         },
         {
-          key: 'foodProducts',
+          key: 'foodproducts',
           label: 'Food Products',
         },
         {
@@ -154,35 +154,35 @@ export const filters = [
           label: 'Airtime',
         },
         {
-          key: 'graphics&CreativeServices',
+          key: 'graphicscreativeservices',
           label: 'Graphics & Creative Services',
         },
         {
-          key: 'development&ITServices',
+          key: 'developmentitservices',
           label: 'Development & IT Services',
         },
         {
-          key: 'sales&MarketingServices',
+          key: 'salesmarketingservices',
           label: 'Sales & Marketing Services',
         },
         {
-          key: 'cryptocurrency&blockchainServices',
+          key: 'cryptocurrencyblockchainservices',
           label: 'Cryptocurrency & blockchain Services',
         },
         {
-          key: 'onsultingMentoring&professionaldevelopment',
+          key: 'consultingmentoringprofessionaldevelopment',
           label: 'Consulting, Mentoring & professional development',
         },
         {
-          key: 'offersearnG$forcompletingtasks)',
+          key: 'offersearnforcompletingtasks',
           label: 'Offers (earn G$ for completing tasks)',
         },
         {
-          key: 'localServiceschildcarelawncaremassageetc',
+          key: 'localserviceschildcarelawncaremassageetc',
           label: 'Local Services (childcare, lawn care, massage, etc.)',
         },
         {
-          key: 'socialCausesdonateG$',
+          key: 'socialcausesdonate',
           label: 'Social Causes (donate G$)',
         },
       ],
