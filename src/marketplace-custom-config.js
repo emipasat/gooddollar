@@ -126,7 +126,7 @@ export const filters = [
     config: {
       options: [
         {
-          key: 'digitalcollectiblesnfts',
+          key: 'digital_collectible_and_nfts',
           label: 'Digital Collectibles & NFTs',
         },
         {
@@ -134,7 +134,7 @@ export const filters = [
           label: 'apparel',
         },
         {
-          key: 'artcollectibles',
+          key: 'art_and_collectibles',
           label: 'Art & collectibles',
         },
         {
@@ -142,11 +142,11 @@ export const filters = [
           label: 'Electronics',
         },
         {
-          key: 'homegoodsothers',
+          key: 'home_goods_and_others',
           label: 'Home Goods & others',
         },
         {
-          key: 'foodproducts',
+          key: 'food_products',
           label: 'Food Products',
         },
         {
@@ -154,35 +154,35 @@ export const filters = [
           label: 'Airtime',
         },
         {
-          key: 'graphicscreativeservices',
+          key: 'graphics_and_creative_services',
           label: 'Graphics & Creative Services',
         },
         {
-          key: 'developmentitservices',
+          key: 'development_and_it_services',
           label: 'Development & IT Services',
         },
         {
-          key: 'salesmarketingservices',
+          key: 'sales_and_marketing_services',
           label: 'Sales & Marketing Services',
         },
         {
-          key: 'cryptocurrencyblockchainservices',
+          key: 'cryptocurrency_and_blockchain_services',
           label: 'Cryptocurrency & blockchain Services',
         },
         {
-          key: 'consultingmentoringprofessionaldevelopment',
+          key: 'consulting_mentoring_and_professional_development',
           label: 'Consulting, Mentoring & professional development',
         },
         {
-          key: 'offersearnforcompletingtasks',
+          key: 'offers_earn_gd_for_completing_tasks',
           label: 'Offers (earn G$ for completing tasks)',
         },
         {
-          key: 'localserviceschildcarelawncaremassageetc',
+          key: 'local_services_childcare_lawn_care_massage_etc',
           label: 'Local Services (childcare, lawn care, massage, etc.)',
         },
         {
-          key: 'socialcausesdonate',
+          key: 'social_causes_donate_gd',
           label: 'Social Causes (donate G$)',
         },
       ],
